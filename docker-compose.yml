@@ -1,0 +1,38 @@
+# Hotoso: every service in one file.
+#
+#   docker compose up -d --build     build (if needed) and start in the background
+#   docker compose ps                what's running, and is it healthy?
+#   docker compose logs -f frontend  watch the frontend's output (Ctrl+C to stop watching)
+#   docker compose down              stop and remove the containers
+#
+# Today there's only the frontend. From M0 we add:
+#   db       PostgreSQL 16 (with a named volume, so data survives restarts)
+#   backend  Django on port 8000 (the frontend forwards /api/... to it)
+#   redis    from M7, for Celery background jobs
+
+name: hotoso
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        API_ORIGIN: http://backend:8000          # the Django service's name on Docker's network
+        NEXT_PUBLIC_SITE_URL: http://localhost:3000
+    image: hotoso-frontend
+    ports:
+      # "127.0.0.1:" = only THIS laptop can open it. Without it, anyone on the
+      # same Wi-Fi could reach the app on your IP address.
+      - "127.0.0.1:3000:3000"
+    restart: unless-stopped
+
+    # ---- locked down: the container can do as little as possible ----
+    read_only: true                  # nobody can change the app's files while it runs
+    tmpfs:
+      - /tmp                         # scratch space, wiped on every restart
+      - /app/.next/cache             # Next.js caches resized images here
+    cap_drop: [ALL]                  # drop every special Linux power (it needs none)
+    security_opt:
+      - no-new-privileges:true       # and it can never gain new ones
+    mem_limit: 768m                  # can't eat the laptop's memory
+    pids_limit: 200                  # can't start runaway processes

@@ -1,0 +1,19 @@
+# Files Docker must NOT copy into the image (the "build context").
+# Smaller context = faster builds; and secrets can't leak in by accident.
+
+# rebuilt inside the container, and the Windows versions wouldn't work on Linux
+node_modules
+.next
+*.tsbuildinfo
+
+# secrets and local settings never go into an image
+.env
+.env.*
+*.pem
+
+# not needed to build the app
+.git
+.gitignore
+.dockerignore
+Dockerfile
+npm-debug.log*
