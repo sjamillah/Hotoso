@@ -5,10 +5,6 @@ import { DEAL_STATUSES } from "@/lib/types"
 
 export const metadata: Metadata = { title: "All screens", robots: { index: false } }
 
-/**
- * A map of every screen and state, for reviewing the mock UI.
- * (Development helper. Not part of the product.)
- */
 const statusLinks = (base: string) =>
   DEAL_STATUSES.map((s) => ({ label: s, href: `${base}${base.includes("?") ? "&" : "?"}status=${s}` }))
 

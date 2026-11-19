@@ -1,6 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton"
 
-/** Loading shape of a deal room: title, hold strip, action card, timeline, receipt. */
 export function RoomSkeleton() {
   return (
     <div className="flex flex-col gap-8" aria-busy="true" aria-label="Loading the deal">

@@ -11,17 +11,6 @@ import { Textarea } from "@/components/ui/textarea"
 import type { DisputeReason } from "@/lib/types"
 import { PhotoPicker } from "./deal-room/sheets"
 
-/**
- * DISPUTE FLOW: "Something's wrong with my order"  (risk #3, ui-direction §5)
- *
- * Three short steps. A stressed person shouldn't face one long form.
- * Every step repeats where the money is: still held, and frozen once sent.
- *
- * In M6 the last step sends POST /api/room/{slug}/dispute/?t= with the reason,
- * details and photos. The backend moves the deal to `disputed`, which stops
- * the category's auto-release (48h or 72h).
- */
-
 const REASONS: { value: DisputeReason; label: string; hint: string }[] = [
   { value: "not_received", label: "It never arrived", hint: "Nothing has reached you yet." },
   { value: "not_as_described", label: "It's not what was in the photos", hint: "Wrong size, colour, model or condition." },
@@ -46,7 +35,6 @@ export function DisputeFlow({
   const [error, setError] = React.useState<string | null>(null)
   const headingRef = React.useRef<HTMLHeadingElement>(null)
 
-  // When the step changes, move keyboard/screen-reader focus to the new heading.
   React.useEffect(() => {
     headingRef.current?.focus()
   }, [step])
@@ -67,7 +55,6 @@ export function DisputeFlow({
 
   return (
     <div className="flex flex-col gap-8">
-      {/* progress: three segments */}
       <div className="flex flex-col gap-2">
         <div className="flex gap-1.5" aria-hidden="true">
           {[1, 2, 3].map((n) => (

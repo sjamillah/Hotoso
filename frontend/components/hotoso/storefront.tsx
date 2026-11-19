@@ -4,25 +4,10 @@ import { cn } from "@/lib/utils"
 import type { DealPhoto, PublicSeller } from "@/lib/types"
 import { DealImage } from "./deal-image"
 
-/**
- * THE STOREFRONT: a seller's shop identity, like a signboard.
- *
- * The cover is a mosaic of the seller's OWN product photos, so the visuals
- * always match what they sell: Ama's sneakers, Kofi's phones. Then the
- * avatar (overlapping the cover, like a profile page), name, a one-line bio,
- * where they are, and the real numbers buyers judge them by.
- *
- *   variant="banner"  the seller's dashboard and their public shop page
- *   variant="card"    the deal page, with a "Visit shop" link
- */
-
-// Column classes written out in full (Tailwind only generates classes it can see)
 const MOBILE_COLS = ["grid-cols-1", "grid-cols-1", "grid-cols-2", "grid-cols-3"]
 const WIDE_COLS = ["sm:grid-cols-1", "sm:grid-cols-1", "sm:grid-cols-2", "sm:grid-cols-3", "sm:grid-cols-4", "sm:grid-cols-5"]
 
 export function StoreCover({ photos, className }: { photos: DealPhoto[]; className?: string }) {
-  // One tile per DIFFERENT photo, up to 5: a seller with one product gets one
-  // full-width cover photo instead of one tile and an empty black gap.
   const tiles = photos.filter((p, i, all) => all.findIndex((q) => q.src === p.src) === i).slice(0, 5)
   const n = Math.max(tiles.length, 1)
   return (
@@ -32,7 +17,6 @@ export function StoreCover({ photos, className }: { photos: DealPhoto[]; classNa
           <DealImage photo={p} sizes="(min-width: 640px) 25vw, 33vw" />
         </div>
       ))}
-      {/* a soft ink fade at the bottom, so the avatar and text sit calmly on top */}
       <div className="absolute inset-0 bg-gradient-to-t from-ink/55 via-transparent to-transparent" />
     </div>
   )
@@ -47,8 +31,6 @@ export function SellerAvatar({ name, className }: { name: string; className?: st
     <span
       aria-hidden="true"
       className={cn(
-        // relative + z-10: the cover is "positioned", so it would paint OVER the
-        // avatar; positioning the avatar with a higher z-index brings it on top
         "relative z-10 flex shrink-0 items-center justify-center rounded-full border-4 border-card bg-butter font-display font-semibold text-ink",
         className
       )}
@@ -102,7 +84,6 @@ export function Storefront({
             )}
           </div>
 
-          {/* the numbers buyers judge a seller by: real, never stars */}
           {isNew ? (
             <p className="label-caps w-fit rounded-full bg-butter-soft px-2.5 py-1.5 text-ink">New on Hotoso</p>
           ) : (

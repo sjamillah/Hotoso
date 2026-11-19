@@ -6,24 +6,10 @@ import { ArrowLeft } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { TRAIL_EVENT, readTrail } from "./nav-tracker"
 
-/**
- * A smart "Back" button.
- *
- * - Came here from another Hotoso page (on the trail kept by <NavTracker>)? It goes BACK there (the shop → the
- *   dashboard, the shop → the deal), exactly like the browser's back button.
- * - Came from outside (a WhatsApp link, a fresh tab)? It hides itself:
- *   "back" would mean leaving Hotoso, and the browser already does that.
- *   Pass `fallbackHref` to show it anyway and go there instead.
- *
- * `useSyncExternalStore` reads the trail safely: the server (which has no
- * trail) renders nothing, and the browser fills it in.
- */
-/** Is there a Hotoso page behind this one on the trail? */
 function canGoBackInHotoso() {
   return readTrail().length >= 2
 }
 
-/** Re-check whenever <NavTracker> updates the trail. */
 function subscribe(onChange: () => void) {
   window.addEventListener(TRAIL_EVENT, onChange)
   return () => window.removeEventListener(TRAIL_EVENT, onChange)

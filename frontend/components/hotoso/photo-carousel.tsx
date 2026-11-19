@@ -6,19 +6,6 @@ import { cn } from "@/lib/utils"
 import type { DealPhoto } from "@/lib/types"
 import { DealImage } from "./deal-image"
 
-/**
- * THE PRODUCT GALLERY: one slider, on every screen that shows a product.
- *
- *   Phones:  swipe (CSS scroll-snap: the browser does it, no library),
- *            a "2 / 4" counter and thin segments underneath.
- *   Desktop: the same slider + arrow buttons + a THUMBNAIL STRIP, so you can
- *            see how many photos there are and jump straight to one.
- *
- * variant="hero"    the public deal page (large, with the "Protected" pill)
- * variant="compact" deal rooms (smaller, 4:3)
- *
- * Only the first photo is `preload`ed: it's the first thing a buyer sees.
- */
 export function PhotoCarousel({
   photos,
   title,
@@ -34,12 +21,9 @@ export function PhotoCarousel({
   const thumbsRef = React.useRef<HTMLDivElement>(null)
   const [index, setIndex] = React.useState(0)
   const many = photos.length > 1
-  // With lots of photos, tap-segments get too small to hit: show a progress bar instead
   const lots = photos.length > 6
   const hero = variant === "hero"
 
-  // Keep the current thumbnail in view inside the strip (12 photos won't fit).
-  // We scroll only the STRIP, never the page.
   React.useEffect(() => {
     const strip = thumbsRef.current
     const thumb = strip?.children[index] as HTMLElement | undefined
@@ -77,7 +61,6 @@ export function PhotoCarousel({
               <div
                 className={cn(
                   "relative w-full overflow-hidden bg-muted",
-                  // hero: capped at about half a phone screen so title + price stay visible
                   hero ? "aspect-[4/5] max-h-[52svh] lg:max-h-[78vh]" : "aspect-[4/3]"
                 )}
               >
@@ -87,7 +70,6 @@ export function PhotoCarousel({
           ))}
         </div>
 
-        {/* arrows: desktop only (phones swipe). Faded out at either end. */}
         {many && (
           <>
             <button
@@ -115,7 +97,6 @@ export function PhotoCarousel({
           </>
         )}
 
-        {/* small ink pills floating on the photo: readable on any image */}
         {many && (
           <span aria-hidden="true" className="label-mono pointer-events-none absolute bottom-3 left-3 rounded-full bg-ink px-2.5 py-1 text-paper">
             {index + 1} / {photos.length}
@@ -130,7 +111,6 @@ export function PhotoCarousel({
 
       {many && (
         <>
-          {/* phones, many photos: a progress bar (swipe to move) */}
           {lots && (
             <div aria-hidden="true" className={cn("flex h-11 items-center lg:hidden", hero && "px-5")}>
               <div className="h-0.5 w-full rounded-full bg-rule">
@@ -138,7 +118,6 @@ export function PhotoCarousel({
               </div>
             </div>
           )}
-          {/* phones, a few photos: thin segments, each a 44px-tall button */}
           <div className={cn("flex gap-1.5 lg:hidden", hero && "px-5", lots && "hidden")}>
             {photos.map((photo, i) => (
               <button
@@ -154,8 +133,6 @@ export function PhotoCarousel({
             ))}
           </div>
 
-          {/* desktop: a thumbnail strip that scrolls on its own, so even 12 photos
-              are one click away and the current one is always in view */}
           <div ref={thumbsRef} className="hidden snap-x gap-2 overflow-x-auto p-0.5 [scrollbar-width:thin] lg:flex">
             {photos.map((photo, i) => (
               <button

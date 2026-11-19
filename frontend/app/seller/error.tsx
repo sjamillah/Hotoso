@@ -3,7 +3,6 @@
 import { SellerHeader } from "@/components/hotoso/site-header"
 import { RouteError } from "@/components/hotoso/route-error"
 
-/** Covers /seller and every page under it that has no error.tsx of its own. */
 export default function SellerError({ retry }: { error: Error; retry: () => void }) {
   return (
     <div className="min-h-dvh bg-paper">

@@ -3,14 +3,6 @@ import { ShieldCheck } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Wordmark } from "./wordmark"
 
-/**
- * The quiet footer for every page after the landing. It gives each page an
- * ending (instead of just stopping), carries the brand, and offers the way
- * back to "How it works" for a buyer who's still unsure.
- *
- * `padForPayBar`: the public deal page has a pay button pinned to the bottom
- * of the phone screen, so the footer leaves room for it there.
- */
 export function AppFooter({ padForPayBar = false, className }: { padForPayBar?: boolean; className?: string }) {
   return (
     <footer className={cn("mt-16 border-t border-rule", padForPayBar && "pb-28 lg:pb-0", className)}>

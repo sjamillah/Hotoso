@@ -1,11 +1,6 @@
 import { BadgeCheck, CreditCard, Info, Lock, ShieldCheck } from "lucide-react"
 import { CATEGORIES, type CategoryCode } from "@/lib/categories"
 
-/**
- * The calm promises under the price (doc 04 §5.1, item 8), now specific to
- * the category: the inspection window (48h or 72h) and any rule the buyer
- * should know BEFORE paying (doc 08), plus the proofs the seller provided.
- */
 export function Reassurance({
   sellerFirstName,
   category,
@@ -40,7 +35,6 @@ export function Reassurance({
   )
 }
 
-/** The three steps, used in the "How it works" sheet. */
 export const HOW_IT_WORKS = [
   { n: "01", title: "You pay into Hotoso", body: "Your money waits with us, not with the seller." },
   { n: "02", title: "The seller ships", body: "They can see you've paid, so they know you're real." },

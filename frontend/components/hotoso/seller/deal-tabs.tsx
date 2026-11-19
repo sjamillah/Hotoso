@@ -3,17 +3,11 @@
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-/**
- * The tabs are interactive (client), but the ROWS inside each tab are
- * rendered on the server and passed in as `content`. That's the same
- * "server content inside a client shell" pattern as the How-it-works sheet.
- */
 export type DealTabGroup = {
   key: string
   label: string
   count: number
   urgent?: boolean
-  /** show the count without a badge (e.g. on "All") */
   quietCount?: boolean
   content: React.ReactNode
 }

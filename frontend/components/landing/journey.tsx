@@ -6,22 +6,9 @@ import { Check, Lock } from "lucide-react"
 import { photos } from "@/lib/photos"
 import { cn } from "@/lib/utils"
 
-/**
- * CHAPTER II · THE HOLD: a scroll-driven story.
- *
- * Layout: a "stage" stays pinned (CSS `position: sticky`) while the five
- * steps scroll past. An IntersectionObserver reports which step is in the
- * middle of the screen; the stage then moves the coin to match.
- *
- * Why it's worth the JavaScript: it's the product's whole promise, told by
- * the reader's own scrolling, including the "frozen" path that reassures
- * buyers most.
- */
-
 type Place = "buyer" | "hotoso" | "seller"
 type CoinState = "unpaid" | "held" | "clock" | "frozen" | "paid"
 
-// Each photo shows the ACTION of its step, so the story stays one deal (Ama's Black AF1).
 const STEPS: { n: string; title: string; body: string; at: Place; state: CoinState; caption: string; photo: StaticImageData; alt: string }[] = [
   {
     n: "01",
@@ -82,7 +69,6 @@ export function Journey() {
   const stepRefs = React.useRef<(HTMLElement | null)[]>([])
 
   React.useEffect(() => {
-    // A step is "active" when it crosses the middle band of the screen.
     const observer = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
@@ -100,7 +86,6 @@ export function Journey() {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-20">
-      {/* ------------------------------------------------ the pinned stage */}
       <div className="sticky top-0 z-10 -mx-5 bg-ink px-5 pt-6 pb-8 lg:top-[14vh] lg:mx-0 lg:h-[72vh] lg:self-start lg:px-0 lg:pt-0">
         <div className="flex h-full flex-col justify-center">
           <div aria-hidden="true">
@@ -120,7 +105,6 @@ export function Journey() {
             </div>
 
             <div className="relative mx-7 mt-5 h-20 lg:mx-9 lg:h-24">
-              {/* the track, and how far the money has travelled */}
               <span className="absolute top-1/2 h-px w-full -translate-y-1/2 bg-ink-2" />
               <span
                 className={cn(
@@ -133,7 +117,6 @@ export function Journey() {
                 <span key={x} style={{ left: x }} className="absolute top-1/2 size-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-paper bg-ink" />
               ))}
 
-              {/* the 72-hour clock: a dashed orbit around the held coin */}
               <span
                 style={{ left: "50%" }}
                 className={cn(
@@ -142,7 +125,6 @@ export function Journey() {
                 )}
               />
 
-              {/* THE coin */}
               <span
                 style={{ left: LEFT[step.at] }}
                 className={cn(
@@ -166,7 +148,6 @@ export function Journey() {
             </div>
           </div>
 
-          {/* the caption, in the editorial italic voice */}
           <p aria-live="polite" className="mt-6 text-center font-display text-2xl font-light text-paper italic lg:mt-10 lg:text-4xl">
             {step.caption}
           </p>
@@ -176,7 +157,6 @@ export function Journey() {
         </div>
       </div>
 
-      {/* ------------------------------------------------ the steps that scroll past */}
       <ol className="relative">
         {STEPS.map((s, i) => (
           <li

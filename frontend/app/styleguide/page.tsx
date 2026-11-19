@@ -24,8 +24,6 @@ import { CarouselDemo, OverlayDemos, TabsDemo } from "./interactive-demos"
 
 export const metadata: Metadata = { title: "Styleguide" }
 
-/* ---------- token tables (class names must be written out in full so
-   Tailwind can find them when it scans this file) ---------- */
 const SWATCHES = [
   { name: "paper", hex: "#E8E5D8", cls: "bg-paper", note: "App background (Alabaster)" },
   { name: "card", hex: "#F3F1E8", cls: "bg-card", note: "Cards, sheets, inputs" },
@@ -45,7 +43,6 @@ const SWATCHES = [
   { name: "sky-soft", hex: "#D8E1E5", cls: "bg-sky-soft", note: "" },
 ]
 
-/* Example props for the HoldStrip in each status */
 const STRIP_BASE = { amountMinor: af1Deal.itemMinor, buyerName: "Kwame", sellerName: "Ama" }
 const STRIP_EXTRAS: Partial<Record<HoldStripProps["status"], Partial<HoldStripProps>>> = {
   funded: { shipBy: "Fri, 20 Nov" },
@@ -57,7 +54,6 @@ const STRIP_EXTRAS: Partial<Record<HoldStripProps["status"], Partial<HoldStripPr
 export default function StyleguidePage() {
   return (
     <div className="min-h-dvh bg-paper">
-      {/* Dark "room" header: the ceremonial mood, used sparingly */}
       <header className="bg-ink text-paper">
         <div className="mx-auto flex max-w-[1120px] flex-col gap-6 px-5 pt-6 pb-12 md:px-8 md:pb-16">
           <Wordmark tone="ink" />
@@ -73,7 +69,6 @@ export default function StyleguidePage() {
       </header>
 
       <main className="mx-auto flex max-w-[1120px] flex-col gap-16 px-5 py-12 md:px-8">
-        {/* ------------------------------------------------ LOGO */}
         <Section
           title="Logo"
           intro="An H made of meaning: buyer and seller lean in, and the coin that joins them is held in the middle by Hotoso."
@@ -96,7 +91,6 @@ export default function StyleguidePage() {
           </div>
         </Section>
 
-        {/* ------------------------------------------------ COLOUR */}
         <Section title="Colour" intro="Tokens only. These are the only colours that exist as classes in the app.">
           <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
             {SWATCHES.map((s) => (
@@ -112,7 +106,6 @@ export default function StyleguidePage() {
           </ul>
         </Section>
 
-        {/* ------------------------------------------------ TYPE */}
         <Section title="Type" intro="Fraunces for money and ceremony, Geist for reading, Geist Mono for numbers.">
           <div className="flex flex-col gap-6">
             <TypeRow name="display-caps · Fraunces 300">
@@ -140,7 +133,6 @@ export default function StyleguidePage() {
           </div>
         </Section>
 
-        {/* ------------------------------------------------ BUTTONS */}
         <Section title="Buttons" intro="One dark button per screen: it's always the next step. Every size is at least 44px tall.">
           <div className="flex flex-col gap-6">
             <div className="flex flex-wrap items-center gap-3">
@@ -174,7 +166,6 @@ export default function StyleguidePage() {
           </div>
         </Section>
 
-        {/* ------------------------------------------------ INPUTS */}
         <Section title="Inputs" intro="48px tall, label always above, errors under the field in clay.">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <div className="flex flex-col gap-2">
@@ -205,7 +196,6 @@ export default function StyleguidePage() {
           </div>
         </Section>
 
-        {/* ------------------------------------------------ STATUS CHIP */}
         <Section title="Status chip" intro="Words always carry the meaning; colour only supports it.">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <ChipColumn viewer="buyer" />
@@ -213,7 +203,6 @@ export default function StyleguidePage() {
           </div>
         </Section>
 
-        {/* ------------------------------------------------ HOLD STRIP */}
         <Section
           title="Hold strip"
           intro="Where is the money right now? Every deal status from doc 03 §3. The coin is the only decorative motion."
@@ -270,7 +259,6 @@ export default function StyleguidePage() {
           </div>
         </Section>
 
-        {/* ------------------------------------------------ MONEY */}
         <Section title="Receipt and money moment" intro="Receipts for the breakdown, one money moment per screen.">
           <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-2">
             <ReceiptCard
@@ -290,7 +278,6 @@ export default function StyleguidePage() {
           </div>
         </Section>
 
-        {/* ------------------------------------------------ TRUST */}
         <Section title="Seller trust block" intro="Real numbers only. New sellers are labelled honestly, never with stars.">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <TrustBlock seller={ama} />
@@ -298,7 +285,6 @@ export default function StyleguidePage() {
           </div>
         </Section>
 
-        {/* ------------------------------------------------ TIMELINE */}
         <Section title="Timeline" intro="Plain sentences, newest at the bottom. Hover or focus a time to see the exact moment.">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <Card>
@@ -320,7 +306,6 @@ export default function StyleguidePage() {
           </div>
         </Section>
 
-        {/* ------------------------------------------------ OVERLAYS + TABS */}
         <Section title="Sheets, dialogs, toasts" intro="Overlays dim the page with ink. No blur (no glass).">
           <OverlayDemos />
         </Section>
@@ -349,7 +334,6 @@ export default function StyleguidePage() {
           <CarouselDemo />
         </Section>
 
-        {/* ------------------------------------------------ STATES */}
         <Section title="Screen states" intro="Every screen: loading, empty, error, offline.">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <Card>
@@ -397,8 +381,6 @@ export default function StyleguidePage() {
     </div>
   )
 }
-
-/* ---------- small layout helpers for this page ---------- */
 
 function Section({ title, intro, children }: { title: string; intro: string; children: React.ReactNode }) {
   return (

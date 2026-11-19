@@ -3,17 +3,6 @@
 import * as React from "react"
 import { cn } from "@/lib/utils"
 
-/**
- * <Reveal>: shows its content with a gentle rise when it scrolls into view.
- *
- * How it works: an IntersectionObserver (a browser feature that tells you when
- * an element enters the screen) sets `data-shown` ONCE. The CSS in
- * globals.css ("MOTION SYSTEM") does the animation. Add className="print" to
- * make it print downwards like a receipt instead of rising.
- *
- * Safe by design: content is only hidden while JavaScript runs and motion is
- * allowed. Without JS, or with "reduce motion", everything simply shows.
- */
 export function Reveal({
   children,
   className,
@@ -35,7 +24,7 @@ export function Reveal({
       ([entry]) => {
         if (entry.isIntersecting) {
           setShown(true)
-          observer.disconnect() // once is enough
+          observer.disconnect()
         }
       },
       { rootMargin: "0px 0px -12% 0px" }

@@ -1,15 +1,6 @@
 import { CloudOff, TriangleAlert } from "lucide-react"
 import { cn } from "@/lib/utils"
 
-/**
- * Shared screen states (doc 04 §6). Every data view needs:
- *   loading → a Skeleton in the shape of the content (components/ui/skeleton)
- *   empty   → a helpful sentence AND a next action
- *   error   → what happened AND what to do
- *   offline → "You're offline. We'll retry."
- * Calm words, no blame, no jargon, no error codes in the headline.
- */
-
 export function EmptyState({
   title,
   children,

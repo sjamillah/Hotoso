@@ -12,18 +12,6 @@ import { HoldStrip } from "./hold-strip"
 import { MoneyMoment } from "./money-moment"
 import { Reveal } from "./reveal"
 
-/**
- * PAY RETURN  (doc 04 §5.2): risk #1 in docs/design/ui-direction.md §5.
- *
- * The buyer just came back from Paystack. We DON'T trust that redirect as
- * proof of payment. Instead we POLL: ask the backend every 2 seconds
- * "is this reference confirmed?", for at most 60 seconds.
- *
- *   confirming → success  (the backend verified it with Paystack)
- *              → failed   (Paystack says it failed / was abandoned)
- *              → slow     (60s passed with no answer: stop asking, reassure)
- */
-
 const POLL_EVERY_MS = 2000
 const HINT_AFTER_MS = 20000
 const GIVE_UP_AFTER_MS = 60000
@@ -52,7 +40,7 @@ export function PayReturn({
   const [phase, setPhase] = React.useState<Phase>("confirming")
   const [showHint, setShowHint] = React.useState(false)
   const [roomUrl, setRoomUrl] = React.useState<string | null>(null)
-  const [round, setRound] = React.useState(0) // bumps when the buyer taps "Check again"
+  const [round, setRound] = React.useState(0)
 
   React.useEffect(() => {
     let cancelled = false
@@ -77,7 +65,6 @@ export function PayReturn({
     }
     timer = setTimeout(poll, 600)
 
-    // Cleanup: if the buyer leaves the page, stop polling.
     return () => {
       cancelled = true
       clearTimeout(timer)
@@ -92,7 +79,6 @@ export function PayReturn({
   }
 
   return (
-    // aria-live: screen readers announce the change from "confirming" to the result
     <div aria-live="polite" className="mx-auto flex w-full max-w-[560px] flex-col gap-8 px-5 pt-6 pb-16">
       {(phase === "confirming" || phase === "slow") && (
         <Confirming deal={deal} reference={reference} showHint={showHint} slow={phase === "slow"} onCheckAgain={checkAgain} />
@@ -183,7 +169,6 @@ function Success({ deal, reference, roomUrl }: { deal: PayReturnDeal; reference:
         />
       </MoneyMoment>
 
-      {/* prints just after the coin lands in Hotoso */}
       <Reveal className="print" delay={900}>
         <ReceiptCard lines={deal.lines} totalLabel="You paid" totalMinor={deal.totalMinor} reference={reference} timestamp="Just now" />
       </Reveal>

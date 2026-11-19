@@ -6,21 +6,10 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Wordmark } from "./wordmark"
 
-/**
- * Three headers, one per kind of screen:
- *   PublicHeader  → buyer-facing pages: centred wordmark, Hotoso steps back
- *   RoomHeader    → deal rooms: wordmark + the deal's ID in mono
- *   SellerHeader  → seller pages: wordmark + the seller's avatar
- */
-
 export function PublicHeader({ right, back, className }: { right?: React.ReactNode; back?: React.ReactNode; className?: string }) {
   return (
-    // Phones: logo on the left, the link on the right (natural reading order, no squeeze).
-    // Desktop: the editorial centred logo, because there's room for it.
     <header className={cn("mx-auto flex h-14 max-w-[1120px] items-center justify-between gap-4 px-5 lg:grid lg:grid-cols-[1fr_auto_1fr] lg:px-8", className)}>
-      {/* left: Back (when there is somewhere to go back to) */}
       {back ? <div className="flex items-center lg:justify-self-start">{back}</div> : <span className="hidden lg:block" />}
-      {/* phones: logo sits next to Back on the left; desktop: centred */}
       <Link href="/" aria-label="Hotoso home" className="mr-auto -ml-1 flex h-11 items-center rounded-xs px-1 lg:mr-0 lg:ml-0">
         <Wordmark />
       </Link>
@@ -55,7 +44,6 @@ export function SellerHeader({ name = "Ama Owusu" }: { name?: string }) {
         <Wordmark className="text-xl" />
       </Link>
       <div className="flex items-center gap-3">
-        {/* desktop: the main action lives top-right, where people look for it */}
         <Button size="sm" asChild className="hidden lg:inline-flex">
           <Link href="/seller/deals/new">
             <Plus /> New deal

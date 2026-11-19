@@ -1,20 +1,6 @@
 import { cn } from "@/lib/utils"
 import { amountAriaLabel, formatAmount, formatGHS, type Minor } from "@/lib/money"
 
-/**
- * RECEIPT CARD (doc 04 §4.3): money moments look like printed receipts.
- *
- *   ╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮   ← perforated top edge
- *   Black AF1, size 42 ......... 450.00
- *   Hotoso protection (1.5%) ...... 6.75
- *   - - - - - - - - - - - - - - - - - -
- *   You pay                  GHS 456.75   ← butter total row
- *   REF HTS-PAY-01JD…     18 NOV, 14:02
- *
- * Numbers are in Geist Mono with "tabular" digits: every digit has the same
- * width, so amounts line up in a neat right-hand column, like a till slip.
- */
-
 export type ReceiptLine = { label: string; amountMinor: Minor }
 
 export function ReceiptCard({
@@ -43,7 +29,6 @@ export function ReceiptCard({
         {lines.map((line) => (
           <div key={line.label} className="flex items-end gap-2">
             <dt className="min-w-0 text-base text-ink">{line.label}</dt>
-            {/* dotted "leader" that walks your eye from label to number */}
             <span aria-hidden="true" className="mb-1.5 min-w-4 flex-1 border-b-2 border-dotted border-rule" />
             <dd className="shrink-0 font-mono text-base text-ink tabular-nums">
               {formatAmount(line.amountMinor)}

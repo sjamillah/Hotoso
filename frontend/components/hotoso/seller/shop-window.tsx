@@ -6,12 +6,6 @@ import { DealImage } from "../deal-image"
 import { StatusChip } from "../status-chip"
 import { CategoryTag } from "../category-tag"
 
-/**
- * "YOUR SHOP WINDOW": the seller's live products as photos, in a swipeable
- * row (CSS scroll-snap). Sellers think in PRODUCTS, not table rows, and
- * photos make the dashboard feel like their shop, not a spreadsheet.
- * Only deals still in motion appear; finished ones live in the table below.
- */
 const LIVE: DealStatus[] = ["funded", "disputed", "payout_failed", "awaiting_payment", "shipped", "releasing"]
 
 export function ShopWindow({ deals }: { deals: Deal[] }) {

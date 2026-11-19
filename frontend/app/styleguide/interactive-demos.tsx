@@ -36,12 +36,9 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 
-/** Everything on the styleguide that needs clicks or state lives here. */
-
 export function OverlayDemos() {
   return (
     <div className="flex flex-wrap gap-3">
-      {/* Release confirmation: risk #2 in docs/design/ui-direction.md §5 */}
       <Sheet>
         <SheetTrigger asChild>
           <Button>I got it, release payment</Button>
@@ -139,10 +136,6 @@ export function TabsDemo() {
   )
 }
 
-/**
- * shadcn's carousel (Embla). Fine for seller screens. The public deal page
- * will use a lighter CSS scroll-snap carousel instead, to stay under 100 KB.
- */
 export function CarouselDemo() {
   const tones = ["bg-muted", "bg-butter-soft", "bg-sky-soft", "bg-wait-soft"]
   return (

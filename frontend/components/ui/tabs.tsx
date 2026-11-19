@@ -4,14 +4,6 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 import { Tabs as TabsPrimitive } from "radix-ui"
 
-/**
- * Tabs as quiet "garment tags": caps labels on a thin rule, the active tab
- * marked by a 2px ink underline. No grey pill background (that's the default
- * shadcn look we're avoiding).
- *
- * The list scrolls sideways on narrow phones instead of squashing labels.
- * Radix gives us keyboard support for free: ← → move between tabs.
- */
 function Tabs({
   className,
   orientation = "horizontal",

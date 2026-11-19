@@ -1,13 +1,3 @@
-/**
- * Every photo the mock uses, imported as FILES (not URLs).
- *
- * Importing gives next/image three things for free:
- *   1. the exact width/height → it reserves space, so nothing jumps
- *   2. a tiny blurred preview → shown while the real photo loads on 3G
- *   3. a hashed file name    → browsers can cache it forever
- *
- * Credits: assets/photos/CREDITS.md (all Unsplash License).
- */
 import heroJordan1 from "@/assets/photos/hero-jordan1-wet-street.jpg"
 import samba1 from "@/assets/photos/samba-1.jpg"
 import samba2 from "@/assets/photos/samba-2.jpg"

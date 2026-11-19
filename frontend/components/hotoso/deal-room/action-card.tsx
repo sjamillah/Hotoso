@@ -15,14 +15,6 @@ import {
 } from "./sheets"
 import { MockAdvance } from "./mock-advance"
 
-/**
- * THE ACTION CARD: the single next step for this person, right now
- * (doc 04 §5.3). One dark button at most. If there's nothing to do, the card
- * says so, which is also reassuring ("Nothing else to do").
- *
- * `hrefFor(status)` builds the demo link to the next status (mock only).
- */
-
 const REASON_TEXT = {
   not_received: "It never arrived",
   not_as_described: "Not as described",
@@ -72,8 +64,6 @@ function Frame({
 }
 
 const Body = ({ children }: { children: React.ReactNode }) => <p className="text-base text-ink-2">{children}</p>
-
-/* =================================================================== BUYER */
 
 function BuyerAction({ deal, hrefFor, problemHref }: Props) {
   const seller = deal.seller.firstName
@@ -170,8 +160,6 @@ function BuyerAction({ deal, hrefFor, problemHref }: Props) {
       )
   }
 }
-
-/* =================================================================== SELLER */
 
 function SellerAction({ deal, hrefFor }: Props) {
   const buyer = deal.buyer?.firstName ?? "the buyer"

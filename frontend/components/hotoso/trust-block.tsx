@@ -1,19 +1,12 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { cn } from "@/lib/utils"
 
-/**
- * SELLER TRUST BLOCK (doc 04 §4.4): who the seller is, plus a calm "proof
- * card" of real numbers. Never stars: we can't back a star rating with data.
- * New sellers get an honest "New on Hotoso" instead of empty zeros.
- */
-
 export type SellerSummary = {
   name: string
   handle: string
   avatarUrl?: string
   dealsCompleted: number
   problems: number
-  /** e.g. "Mar 2026" */
   memberSince: string
 }
 
@@ -65,8 +58,6 @@ export function TrustBlock({ seller, className }: { seller: SellerSummary; class
 
 function Stat({ value, label, small }: { value: string; label: string; small?: boolean }) {
   return (
-    // flex-col-reverse: the label (dt) comes first in the code, as HTML
-    // requires, but the number is drawn on top.
     <div className="flex flex-col-reverse items-center justify-center gap-1 px-2 py-4 text-center">
       <dt className="label-caps text-ink-2">{label}</dt>
       <dd className={cn("money text-ink", small ? "text-lg" : "text-2xl")}>{value}</dd>

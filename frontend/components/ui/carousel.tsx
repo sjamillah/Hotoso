@@ -95,8 +95,6 @@ function Carousel({
 
   React.useEffect(() => {
     if (!api) return
-    // Read the starting arrow state on the next frame (inside a callback),
-    // instead of setting state directly in the effect body.
     const frame = requestAnimationFrame(() => onSelect(api))
     api.on("reInit", onSelect)
     api.on("select", onSelect)

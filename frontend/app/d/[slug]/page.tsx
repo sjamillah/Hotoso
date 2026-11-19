@@ -20,19 +20,6 @@ import { BackLink } from "@/components/hotoso/back-link"
 import { CategoryTag } from "@/components/hotoso/category-tag"
 import { windowLabel } from "@/lib/categories"
 
-/**
- * PUBLIC DEAL PAGE  /d/[slug]   (doc 04 §5.1)
- * The buyer arrives here from a WhatsApp link, usually on a mid-range Android.
- *
- * This is a SERVER Component: the HTML is built on the server and arrives
- * ready to read. Only three small islands use JavaScript: the photo counter,
- * the "How it works" sheet and the pay sheet.
- *
- * While `getPublicDeal` is "loading", Next.js shows ./loading.tsx (skeleton).
- * If it throws, Next.js shows ./error.tsx. If the deal doesn't exist,
- * notFound() shows app/not-found.tsx.
- */
-
 export async function generateMetadata({ params }: PageProps<"/d/[slug]">): Promise<Metadata> {
   const { slug } = await params
   const deal = await getPublicDeal(slug)
@@ -48,7 +35,6 @@ export default async function DealPage({ params, searchParams }: PageProps<"/d/[
   const demo = readDemo((await searchParams).demo)
   const deal = await getPublicDeal(slug, demo)
   if (!deal) notFound()
-  // the seller's shop: their cover photos, and other things they sell
   const shop = await getSellerShop(deal.seller.handle)
   const coverPhotos = shop ? [...shop.available, ...shop.sold].map((d) => d.photos[0]) : deal.photos
   const moreToBuy = shop?.available.filter((d) => d.slug !== deal.slug) ?? []
@@ -68,18 +54,11 @@ export default async function DealPage({ params, searchParams }: PageProps<"/d/[
       />
 
       <main className="mx-auto grid max-w-[1120px] gap-8 pb-36 lg:grid-cols-[minmax(0,1fr)_minmax(0,480px)] lg:gap-16 lg:px-8 lg:pt-4 lg:pb-24">
-        {/* Photos first: the item is the hero. A slider on every screen size
-            (sellers often post many photos); on desktop it stays in view
-            while the details scroll beside it. */}
         <div className="lg:sticky lg:top-6 lg:self-start">
           <PhotoCarousel photos={deal.photos} title={deal.title} />
         </div>
 
-        {/* Order: phones read title → seller → price (the Pay button is pinned to
-            the bottom anyway). Desktop reads title → PRICE + PAY → seller, so
-            the decision sits above the fold. CSS `order` does both from one HTML. */}
         <div className="flex flex-col gap-12 px-5 lg:px-0">
-          {/* Title and price: nothing else competes with them */}
           <section className="order-1 flex flex-col gap-2">
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
               <CategoryTag code={deal.category} />
@@ -98,7 +77,6 @@ export default async function DealPage({ params, searchParams }: PageProps<"/d/[
         </div>
       </main>
 
-      {/* things that might interest the buyer: more from this seller, and proof they deliver */}
       {(moreToBuy.length > 0 || recentlySold.length > 0) && (
         <section aria-labelledby="more-title" className="mx-auto flex max-w-[1120px] flex-col gap-6 border-t border-rule px-5 pt-14 lg:px-8">
           <div className="flex flex-col gap-1">
@@ -130,12 +108,9 @@ function PayStory({ deal }: { deal: PublicDeal }) {
     <>
       <section className="order-3 flex flex-col gap-4 lg:order-2" aria-labelledby="price-heading">
         <h2 id="price-heading" className="heading-caps text-ink">Price</h2>
-        {/* the breakdown "prints" as it comes into view: it draws the eye to the exact price */}
         <Reveal className="print">
           <ReceiptCard lines={receiptLines(deal)} totalMinor={deal.totalMinor} />
         </Reveal>
-        {/* Phones: the button is pinned to the bottom of the screen.
-            Desktop: it sits right under the total. */}
         <PaySheet slug={deal.slug} totalMinor={deal.totalMinor} sellerFirstName={deal.seller.firstName} />
       </section>
 
@@ -155,7 +130,6 @@ function PayStory({ deal }: { deal: PublicDeal }) {
   )
 }
 
-/** Already paid, or cancelled: nothing to pay, and we say why plainly. */
 function NotPayable({ deal }: { deal: PublicDeal }) {
   const cancelled = deal.status === "cancelled"
   return (

@@ -3,11 +3,6 @@
 import { Toaster as Sonner, type ToasterProps } from "sonner"
 import { CircleCheckIcon, InfoIcon, TriangleAlertIcon, OctagonXIcon, Loader2Icon } from "lucide-react"
 
-/**
- * Toasts: small confirmations like "Link copied".
- * Hotoso has one (light) theme for now, so we don't follow the phone's dark
- * mode here. Otherwise toasts would turn black on our paper pages.
- */
 const Toaster = ({ ...props }: ToasterProps) => {
   return (
     <Sonner

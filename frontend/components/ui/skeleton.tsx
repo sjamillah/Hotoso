@@ -1,10 +1,5 @@
 import { cn } from "@/lib/utils"
 
-/**
- * A placeholder in the SHAPE of the content that's loading.
- * The slow pulse is functional ("still loading"), not decoration, and it
- * stops entirely when the phone has "reduce motion" switched on.
- */
 function Skeleton({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div

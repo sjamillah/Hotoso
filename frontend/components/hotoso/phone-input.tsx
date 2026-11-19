@@ -5,14 +5,6 @@ import { cn } from "@/lib/utils"
 import { detectTelco, formatAfterCountryCode, toE164, toLocalDigits } from "@/lib/phone"
 import { Label } from "@/components/ui/label"
 
-/**
- * PHONE INPUT (doc 04 §4.6): a fixed "+233" prefix and a small chip that
- * names the network as soon as the first digits are typed ("055" → MTN).
- *
- * People type numbers many ways: "055 123 4987", "0551234987",
- * "+233 55 123 4987". We accept all of them, tidy the display when you leave
- * the field, and send the international form (+233551234987) in a hidden input.
- */
 export function PhoneInput({
   label,
   name,
@@ -71,7 +63,6 @@ export function PhoneInput({
           className="min-w-0 flex-1 bg-transparent px-3.5 font-mono text-base text-ink tabular-nums outline-none placeholder:text-ink-3 focus-visible:outline-none"
           {...inputProps}
         />
-        {/* live region: screen readers announce the network when it appears */}
         <span id={telcoId} aria-live="polite" className="flex items-center pr-2">
           {telco && (
             <span className="label-caps inline-flex h-7 items-center rounded-full bg-butter-soft px-2.5 text-ink">

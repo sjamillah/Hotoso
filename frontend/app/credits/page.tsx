@@ -7,7 +7,6 @@ import { BackLink } from "@/components/hotoso/back-link"
 
 export const metadata: Metadata = { title: "Photo credits" }
 
-/** Every photo we use, and who took it. Unsplash doesn't require this; we do it anyway. */
 export default function CreditsPage() {
   return (
     <div className="min-h-dvh bg-paper">

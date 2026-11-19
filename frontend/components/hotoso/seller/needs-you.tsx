@@ -5,14 +5,6 @@ import { formatGHSShort } from "@/lib/money"
 import type { Deal } from "@/lib/types"
 import { DealThumb } from "../deal-thumb"
 
-/**
- * "NEEDS YOU NOW": the seller's to-do list, answered first.
- *
- * Only deals where the SELLER must act appear here: something to ship, a
- * problem to answer, a payout number to fix. Most urgent first. Each card
- * says exactly what to do, with one button.
- */
-
 type Todo = { deal: Deal; why: string; action: string; urgent: boolean; rank: number; tone: "wait" | "clay" | "rule" }
 
 function todosFor(deals: Deal[]): Todo[] {
@@ -57,7 +49,6 @@ export function NeedsYou({ deals }: { deals: Deal[] }) {
                 href={`/seller/deals/${deal.slug}`}
                 className={cn(
                   "group flex h-full flex-col gap-4 rounded-md border bg-card p-4 transition-colors duration-200 hover:border-ink",
-                  // our colour meanings: wait = a deadline, clay = a problem
                   tone === "clay" ? "border-clay" : tone === "wait" ? "border-wait" : "border-rule"
                 )}
               >

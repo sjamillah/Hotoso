@@ -6,15 +6,6 @@ import { HoldStrip } from "@/components/hotoso/hold-strip"
 import type { DealStatus } from "@/lib/types"
 import { photos } from "@/lib/photos"
 
-/**
- * The hero's example deal, playing itself out: link sent → paid → shipped →
- * paid out, then again. Where other sites put a star rating, we show the
- * product WORKING.
- *
- * Purposeful details:
- *  - it pauses while you hover or focus it (so you can read it);
- *  - with "reduce motion" on, it stays still on "held safely".
- */
 const STAGES: { status: DealStatus; label: string; extra?: Record<string, string> }[] = [
   { status: "awaiting_payment", label: "Link sent on WhatsApp" },
   { status: "funded", label: "Kwame paid. Ama ships.", extra: { shipBy: "Fri, 20 Nov" } },
@@ -57,7 +48,6 @@ export function HeroLiveCard() {
       <div className="mt-4 border-t border-rule pt-4">
         <HoldStrip status={stage.status} amountMinor={45000} buyerName="Kwame" sellerName="Ama" {...stage.extra} />
       </div>
-      {/* a tiny progress row: which stage we're on */}
       <div className="mt-4 flex items-center gap-3">
         <div className="flex flex-1 gap-1" aria-hidden="true">
           {STAGES.map((s, n) => (

@@ -14,20 +14,6 @@ import { PhotoPicker, ShareSheet } from "./deal-room/sheets"
 import { CATEGORY_ICONS } from "./category-tag"
 import { CATEGORIES, CATEGORY_CODES, blockedReason, windowLabel, type CategoryCode, type Requirement } from "@/lib/categories"
 
-/**
- * NEW DEAL  (doc 04 §5.5)
- * The seller types; a WhatsApp-style preview shows how the link will look.
- * After "Create deal link", the share sheet opens.
- *
- * In M2 the submit sends POST /api/seller/deals/ (multipart, with photos).
- * The BACKEND calculates the final fee; the number here is only a preview.
- *
- * CATEGORIES (docs/08-categories.md): the category comes FIRST, because it
- * decides the extra proof the seller must add (IMEI photo, box label,
- * condition photos…), the buyer's inspection window and the ship window.
- * Banned items (gift cards, replicas…) are caught early with a plain reason.
- */
-
 type Photo = { id: string; name: string; url: string }
 
 export function NewDealForm() {
@@ -43,9 +29,6 @@ export function NewDealForm() {
   const [showPreview, setShowPreview] = React.useState(false)
   const [shareOpen, setShareOpen] = React.useState(false)
 
-  // Photo previews use temporary "blob:" URLs. Free them when they're removed.
-  // (A ref remembers the latest list without re-rendering; we update it in an
-  // effect, never during render, then clean up when the page closes.)
   const photosRef = React.useRef<Photo[]>([])
   React.useEffect(() => {
     photosRef.current = photos
@@ -53,12 +36,10 @@ export function NewDealForm() {
   React.useEffect(() => () => photosRef.current.forEach((p) => URL.revokeObjectURL(p.url)), [])
 
   const rule = category ? CATEGORIES[category] : null
-  // Which category-specific fields apply right now (some depend on the price)
   const activeReqs: Requirement[] = (rule?.requirements ?? []).filter(
     (r) => !(r.kind === "photo" && r.whenOverMinor != null) || (priceMinor ?? 0) > r.whenOverMinor
   )
   const shipOptions = (rule?.maxShipDays ?? 3) > 3 ? [3, 7, 10, 14] : [3, 2, 1]
-  // Checked live, as the seller types: a plain reason beats a surprise rejection later
   const blocked = blockedReason(`${title} ${note}`)
 
   function pickCategory(code: CategoryCode) {
@@ -146,7 +127,6 @@ export function NewDealForm() {
           </div>
         )}
 
-        {/* Category: first, because it decides the rest of the form */}
         <fieldset className="flex flex-col gap-3" aria-describedby={errors.category ? "cat-err" : undefined}>
           <legend className="mb-1 text-sm font-medium text-ink">What kind of item is it?</legend>
           <div className="flex flex-wrap gap-2">
@@ -179,10 +159,8 @@ export function NewDealForm() {
           )}
         </fieldset>
 
-        {/* Photos */}
         <fieldset className="flex flex-col gap-2">
           <legend className="mb-2 text-sm font-medium text-ink">Photos (up to 4, the first one shows in WhatsApp)</legend>
-          {/* 2 per row on phones (so each photo has room for 44px buttons), 4 on desktop */}
           <ul className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             {photos.map((p, i) => (
               <li key={p.id} className="flex flex-col gap-1">
@@ -207,7 +185,6 @@ export function NewDealForm() {
           </ul>
         </fieldset>
 
-        {/* Title */}
         <div className="flex flex-col gap-2">
           <Label htmlFor="deal-title">Item name</Label>
           <Input
@@ -221,7 +198,6 @@ export function NewDealForm() {
           {errors.title && <p id="deal-title-err" className="text-sm font-medium text-clay">{errors.title}</p>}
         </div>
 
-        {/* Banned items: say WHY, right away, before the seller wastes time */}
         {blocked && (
           <div role="alert" className="flex items-start gap-3 rounded-md border border-clay bg-clay-soft p-4 text-clay [&_svg]:mt-0.5 [&_svg]:size-5 [&_svg]:shrink-0">
             <OctagonAlert aria-hidden="true" />
@@ -232,7 +208,6 @@ export function NewDealForm() {
           </div>
         )}
 
-        {/* What this category needs from the seller (doc 08 §1) */}
         {activeReqs.map((r) =>
           r.kind === "photo" ? (
             <div key={r.id} className="flex flex-col gap-1">
@@ -261,7 +236,6 @@ export function NewDealForm() {
           )
         )}
 
-        {/* Price, with the buyer's total shown live underneath */}
         <MoneyInput
           label="Price"
           name="price"
@@ -279,7 +253,6 @@ export function NewDealForm() {
           }
         />
 
-        {/* Ship within */}
         <fieldset className="flex flex-col gap-2">
           <legend className="mb-2 text-sm font-medium text-ink">
             {shipOptions.length === 4 ? "Made to order? You can take up to 14 days" : "You'll ship within"}
@@ -301,7 +274,6 @@ export function NewDealForm() {
           <p className="text-sm text-ink-2">Counted from when the buyer pays. If you miss it, the buyer can cancel for a refund.</p>
         </fieldset>
 
-        {/* Note */}
         <div className="flex flex-col gap-2">
           <Label htmlFor="deal-note">Note for the buyer (optional)</Label>
           <Textarea id="deal-note" value={note} onChange={(e) => setNote(e.target.value)} placeholder="Brand new with tags. Ships from East Legon." className="min-h-20" />
@@ -310,7 +282,6 @@ export function NewDealForm() {
         <Button type="submit" size="lg" width="full" disabled={!!blocked}>Create deal link</Button>
       </form>
 
-      {/* Desktop: the preview sits beside the form and updates as you type */}
       <aside className="hidden lg:block">
         <div className="sticky top-6">
           <WhatsAppPreview photo={photos[0]} title={title} totalMinor={totalMinor} category={category} />
@@ -330,10 +301,6 @@ export function NewDealForm() {
   )
 }
 
-/**
- * How the link will look in a WhatsApp chat. "WhatsApp-STYLE": the shape of a
- * chat bubble with a link card, in OUR colours (we never copy their brand).
- */
 function WhatsAppPreview({ photo, title, totalMinor, category }: { photo?: Photo; title: string; totalMinor: Minor | null; category: CategoryCode | null }) {
   return (
     <figure className="flex flex-col gap-3">

@@ -16,20 +16,8 @@ import { Eye } from "lucide-react"
 
 export const metadata: Metadata = { title: "Your deals" }
 
-/**
- * SELLER HOME  /seller   (doc 04 §5.4, reworked for desktop)
- *
- * It answers the seller's two morning questions, in this order:
- *   1. "How am I doing?"            → a one-line summary + the money band
- *   2. "What must I do right now?"   → NEEDS YOU NOW (one card per task)
- *   then everything else            → ALL DEALS (a table on desktop)
- *
- * Desktop uses the width (money side by side, a scannable table) instead of
- * a phone column with an embedded deal room. No generic sidebar (doc 04 §8).
- */
 export default async function SellerHomePage({ searchParams }: PageProps<"/seller">) {
   const demo = readDemo((await searchParams).demo)
-  // Three requests at once: Promise.all waits for all of them, in parallel.
   const [profile, summary, deals] = await Promise.all([getSellerProfile(demo), getSellerSummary(demo), getSellerDeals(demo)])
   const todo = needsYouCount(deals)
 
@@ -37,10 +25,8 @@ export default async function SellerHomePage({ searchParams }: PageProps<"/selle
     <div className="min-h-dvh bg-paper">
       <SellerHeader name={profile.name} />
       <main className="mx-auto flex max-w-[1120px] flex-col gap-12 px-5 pt-4 pb-16 lg:gap-14 lg:px-8 lg:pt-8">
-        {/* 1. How am I doing? */}
         <section className="flex flex-col gap-6">
           <div className="flex flex-col gap-2">
-            {/* like the top of a ledger page: where you are, and the date */}
             <p className="label-mono text-ink-2">Your deals · Wednesday 18 November</p>
             <h1 className="title-serif text-[2.75rem] text-ink lg:text-[3.75rem]">
               Good afternoon, <em className="italic">{profile.firstName}.</em>
@@ -53,7 +39,6 @@ export default async function SellerHomePage({ searchParams }: PageProps<"/selle
                   : `You're all caught up. ${formatGHSShort(summary.heldMinor)} is held for you.`}
             </p>
           </div>
-          {/* their shop, as buyers see it: their own photos make the cover */}
           <Storefront
             seller={profile}
             photos={deals.map((d) => d.photos[0])}
@@ -69,7 +54,6 @@ export default async function SellerHomePage({ searchParams }: PageProps<"/selle
 
         <MoneySummary summary={summary} payoutMasked={profile.payoutMasked} />
 
-        {/* phones: the main action sits here (desktop has it in the header) */}
         <Button size="lg" width="full" asChild className="lg:hidden">
           <Link href="/seller/deals/new">
             <Plus /> New deal
@@ -91,13 +75,10 @@ export default async function SellerHomePage({ searchParams }: PageProps<"/selle
           </EmptyState>
         ) : (
           <>
-            {/* 2. What must I do right now? */}
             <NeedsYou deals={deals} />
 
-            {/* the live products, as photos: it's their shop, not a spreadsheet */}
             <ShopWindow deals={deals} />
 
-            {/* 3. Everything else */}
             <section aria-labelledby="all-title" className="flex flex-col gap-4">
               <h2 id="all-title" className="heading-caps text-ink">
                 All deals <span className="font-mono text-ink-2">· {deals.length}</span>
@@ -109,8 +90,6 @@ export default async function SellerHomePage({ searchParams }: PageProps<"/selle
       </main>
       <AppFooter className="pb-24 lg:pb-0" />
 
-      {/* phones: the main action is pinned to the bottom, where the thumb is.
-          (Desktop has it top-right in the header.) */}
       <div className="fixed inset-x-0 bottom-0 z-30 border-t border-rule bg-paper px-5 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] lg:hidden">
         <Button size="lg" width="full" asChild>
           <Link href="/seller/deals/new">

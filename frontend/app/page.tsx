@@ -12,25 +12,6 @@ import { formatGHS } from "@/lib/money"
 import { CATEGORIES, CATEGORY_CODES, type CategoryCode } from "@/lib/categories"
 import { CategoryTag } from "@/components/hotoso/category-tag"
 
-/**
- * LANDING  /   "Follow the coin"
- *
- * One story told in chapters, each in a DIFFERENT visual form, so the page has
- * rhythm instead of repetition:
- *
- *   Hero    dark photo room        → the promise, and a deal playing itself out
- *   I       pure typography (paper) → the two fears, facing each other
- *   II      scroll story (ink)      → the coin's journey, step by step
- *   III     photo collage (paper)   → what people sell, with hang tags
- *   IV      one object (sand)       → the fee, as a receipt that prints
- *   V       colour band (butter)    → three rules, as giant numbers
- *   FAQ     editorial columns       → questions, answered plainly
- *   Footer  signature (ink)         → the last call, and a giant wordmark
- *
- * Motion is purposeful and switches off with "reduce motion".
- * No invented numbers: every figure on this page is a real Hotoso rule.
- */
-
 const HEADLINE = ["Sell to strangers.", "Get paid", "like family."]
 
 const FAQ = [
@@ -59,16 +40,13 @@ export default function LandingPage() {
   )
 }
 
-/* ============================================================== HERO */
 function Hero() {
   return (
     <section className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-ink text-paper">
       <Image src={photos.heroJordan1} alt="" fill preload placeholder="blur" sizes="100vw" className="settle -z-20 object-cover object-[50%_65%]" />
-      {/* the scrim: our own ink, darkest where the words sit */}
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-ink/55" />
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-b from-ink/80 via-transparent to-ink" />
 
-      {/* phones: logo left · tablet and up: centred between the two links */}
       <header className="mx-auto flex h-16 w-full max-w-[1280px] items-center justify-between px-5 sm:grid sm:grid-cols-[1fr_auto_1fr] lg:h-20 lg:px-10">
         <Link href="#how" className="label-caps hidden h-11 w-fit items-center rounded-xs px-1 text-paper underline decoration-paper/40 underline-offset-4 hover:decoration-paper focus-visible:outline-paper sm:flex">
           How it works
@@ -115,7 +93,6 @@ function Hero() {
         </div>
       </div>
 
-      {/* bottom: the thread that leads into chapter I, and the example deal */}
       <div className="mx-auto flex w-full max-w-[1280px] flex-col items-center gap-8 px-5 pb-6 lg:flex-row lg:items-end lg:justify-between lg:px-10 lg:pb-10">
         <a href="#fears" className="label-mono hidden items-center gap-3 rounded-xs text-paper focus-visible:outline-paper lg:flex">
           <span className="flex size-11 items-center justify-center rounded-full border border-paper/40 transition-colors duration-300 hover:border-paper [&_svg]:size-4">
@@ -129,7 +106,6 @@ function Hero() {
   )
 }
 
-/* ============================================================== I · TWO STRANGERS */
 function Fears() {
   return (
     <section id="fears" aria-labelledby="fears-title" className="scroll-mt-4 bg-paper">
@@ -149,7 +125,6 @@ function Fears() {
             </figure>
           </Reveal>
 
-          {/* the middle: a line between them, and Hotoso sitting on it */}
           <Reveal delay={250} className="flex items-center gap-4 md:h-full md:flex-col md:justify-center">
             <span aria-hidden="true" className="h-px flex-1 bg-rule md:h-auto md:w-px" />
             <span className="flex flex-col items-center gap-2">
@@ -171,14 +146,11 @@ function Fears() {
 
       </div>
 
-      {/* A city of strangers. The world BEFORE Hotoso is black and white;
-          colour returns in the next chapter, when the coin starts moving. */}
       <div className="relative isolate flex min-h-[22rem] items-center justify-center overflow-hidden bg-ink px-5 py-20 sm:min-h-[28rem] lg:min-h-[34rem]">
         <Image src={photos.accraTrafficBw} alt="Evening traffic in Dzorwulu, Accra" fill placeholder="blur" sizes="100vw" className="-z-20 object-cover grayscale" />
         <div aria-hidden="true" className="absolute inset-0 -z-10 bg-ink/65" />
         <Reveal className="max-w-[min(56rem,100%)] text-center">
           <p className="label-mono text-butter">Dzorwulu, Accra</p>
-          {/* two lines at most when centred (doc 04 §8) */}
           <p className="mt-5 font-display text-[clamp(1.75rem,4vw,3rem)] leading-tight font-light text-paper">
             A city of strangers. <em className="italic">Hotoso holds the money in the middle.</em>
           </p>
@@ -188,7 +160,6 @@ function Fears() {
   )
 }
 
-/* ============================================================== II · THE HOLD */
 function TheHold() {
   return (
     <section id="how" aria-labelledby="hold-title" className="scroll-mt-0 bg-ink text-paper">
@@ -209,11 +180,8 @@ function TheHold() {
   )
 }
 
-/* ============================================================== III · WHAT PEOPLE SELL */
 function HangTag({ price }: { price: number }) {
   return (
-    // On phones the photo is only ~160px wide, so the tag shrinks to a corner
-    // and says just "Held"; from `sm` up it's the full "Held by Hotoso" tag.
     <div aria-hidden="true" className="hang-tag pointer-events-none absolute -top-3 right-3 z-10 flex flex-col items-center sm:right-5">
       <span className="h-6 w-px bg-ink sm:h-9" />
       <div className="relative rounded-xs bg-paper px-2.5 pt-4 pb-2 text-center shadow-card sm:min-w-[7.5rem] sm:px-3 sm:pt-5 sm:pb-3">
@@ -291,8 +259,6 @@ function Collage() {
           </div>
         </Reveal>
 
-        {/* three columns, staggered on purpose: an editorial spread, not a catalogue grid.
-            Eight sellers, eight categories: shoes are one tile, not the whole wall. */}
         <div className="grid grid-cols-2 gap-x-4 gap-y-14 sm:grid-cols-3 lg:gap-x-6">
           <Reveal className="col-span-2 grid grid-cols-2 gap-x-4 gap-y-14 pt-4 sm:col-span-1 sm:flex sm:flex-col">
             <Shot src={photos.sweaterLilac} title="Lilac chunky knit sweater" price={28000} aspect="aspect-[3/4]" href="/d/SWTLIL01" category="fashion" />
@@ -314,7 +280,6 @@ function Collage() {
   )
 }
 
-/* ============================================================== IV · THE FEE */
 function TheFee() {
   return (
     <section aria-labelledby="fee-title" className="overflow-hidden bg-muted">
@@ -330,7 +295,6 @@ function TheFee() {
           </p>
         </Reveal>
 
-        {/* the receipt PRINTS as it scrolls into view */}
         <div className="mx-auto w-full max-w-[400px] -rotate-2">
           <Reveal className="print">
             <ReceiptCard
@@ -355,7 +319,6 @@ function TheFee() {
   )
 }
 
-/* ============================================================== V · THE RULES */
 function Rules() {
   const rules = [
     { big: "48–72h", text: "To check the order after delivery, depending on the category. Then the money releases on its own." },
@@ -372,8 +335,6 @@ function Rules() {
         <ul className="mt-10 grid grid-cols-1 divide-y divide-ink/25 border-y border-ink/25 md:grid-cols-3 md:divide-x md:divide-y-0 lg:mt-14">
           {rules.map((r, i) => (
             <Reveal as="li" key={r.big} delay={i * 140} className="flex flex-col gap-4 py-10 md:px-6 md:first:pl-0 md:last:pr-0 lg:px-10 lg:py-14">
-              {/* one line, always: the three descriptions then start at the same height.
-                  Sized so the longest ("48–72h") fits its column at every width. */}
               <span className="font-display text-[clamp(3.5rem,7.2vw,6.75rem)] leading-[0.85] font-light tracking-[-0.03em] whitespace-nowrap">{r.big}</span>
               <span className="max-w-[28ch] text-lg">{r.text}</span>
             </Reveal>
@@ -384,7 +345,6 @@ function Rules() {
   )
 }
 
-/* ============================================================== QUESTIONS */
 function Questions() {
   return (
     <section aria-labelledby="faq-title" className="bg-paper">
@@ -394,7 +354,6 @@ function Questions() {
           <h2 id="faq-title" className="mt-5 font-display text-[clamp(2.25rem,4.5vw,3.5rem)] leading-[1.05] font-light text-ink">
             Answered <em className="italic">plainly.</em>
           </h2>
-          {/* wide on phones, tall beside the questions on desktop */}
           <figure className="mt-10 max-w-[340px] max-lg:max-w-none">
             <div className="relative aspect-[16/10] overflow-hidden lg:aspect-[3/4]">
               <Image src={photos.accraVendor} alt="A street vendor in Accra carrying goods" fill placeholder="blur" sizes="(min-width: 1024px) 340px, 100vw" className="object-cover object-[50%_30%]" />
@@ -408,7 +367,6 @@ function Questions() {
               <summary className="flex min-h-16 cursor-pointer list-none items-center gap-5 py-5 text-xl text-ink transition-colors duration-200 hover:text-ink-2 [&::-webkit-details-marker]:hidden">
                 <span className="label-mono w-6 shrink-0 text-ink-2">{String(i + 1).padStart(2, "0")}</span>
                 <span className="flex-1">{item.q}</span>
-                {/* a plus that becomes a minus: the vertical bar folds away */}
                 <span aria-hidden="true" className="relative size-4 shrink-0">
                   <span className="absolute top-1/2 left-0 h-px w-4 bg-ink" />
                   <span className="absolute top-0 left-1/2 h-4 w-px bg-ink transition-transform duration-300 group-open:scale-y-0" />
@@ -423,7 +381,6 @@ function Questions() {
   )
 }
 
-/* ============================================================== FOOTER */
 function Footer() {
   return (
     <footer className="overflow-hidden bg-ink text-paper">
@@ -440,9 +397,7 @@ function Footer() {
         </Reveal>
       </div>
 
-      {/* the signature: a giant wordmark, quietly embossed into the dark */}
       <div aria-hidden="true" className="mx-auto mt-16 flex max-w-[1280px] items-end gap-[2vw] px-5 select-none lg:mt-24 lg:px-10">
-        {/* dimmed, so mark + word read as ONE quiet, embossed signature */}
         <HotosoMark tone="ink" className="size-[16vw] max-h-[13rem] max-w-[13rem] opacity-30" />
         <span className="font-display text-[clamp(5rem,24vw,19rem)] leading-[0.78] font-semibold tracking-[-0.045em] text-ink-2">hotoso</span>
       </div>

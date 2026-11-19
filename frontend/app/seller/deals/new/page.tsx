@@ -5,10 +5,6 @@ import { AppFooter } from "@/components/hotoso/app-footer"
 
 export const metadata: Metadata = { title: "New deal" }
 
-/**
- * /seller/deals/new: a static page (no data to load), so no skeleton is
- * needed. The whole form is one Client Component.
- */
 export default function NewDealPage() {
   return (
     <div className="min-h-dvh bg-paper">

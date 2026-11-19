@@ -1,14 +1,6 @@
 import { cn } from "@/lib/utils"
 import type { DealStatus, Viewer } from "@/lib/types"
 
-/**
- * STATUS CHIP (doc 04 §4.2): a pill with a dot, a soft background and solid
- * text. Colour is never the only signal: the words always say the status.
- *
- * Some statuses read differently per person. "funded" means
- * "Ship now" to the seller but "Paid, in Hotoso" to the buyer.
- */
-
 type Tone = "wait" | "butter" | "sky" | "safe" | "clay" | "muted"
 
 type ChipDef = { label: string | Record<Viewer, string>; tone: Tone | Record<Viewer, Tone> }
@@ -29,8 +21,6 @@ const CHIPS: Record<DealStatus, ChipDef> = {
   },
   refunding: { label: "Refunding", tone: "clay" },
   refunded: { label: "Refunded", tone: "clay" },
-  // Doc 04 suggests ink-3 for "Cancelled", but ink-3 fails AA for text that
-  // matters, so we use ink-2 on muted (still clearly "inactive").
   cancelled: { label: "Cancelled", tone: "muted" },
 }
 

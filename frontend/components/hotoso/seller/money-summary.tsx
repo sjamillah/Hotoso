@@ -2,12 +2,6 @@ import { amountAriaLabel, formatAmount } from "@/lib/money"
 import type { SellerSummary } from "@/lib/types"
 import { HotosoMark } from "../wordmark"
 
-/**
- * THE MONEY STATEMENT: the seller's three numbers in ONE dark band, like the
- * landing's dark "rooms". "Held for you" is the hero (Butterlight, the colour
- * that means "your money is safe"); the other two sit quietly beside it,
- * separated by hairlines. One glance, three answers.
- */
 export function MoneySummary({ summary, payoutMasked }: { summary: SellerSummary; payoutMasked: string }) {
   return (
     <section aria-label="Your money" className="overflow-hidden rounded-md bg-ink text-paper">

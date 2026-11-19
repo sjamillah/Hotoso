@@ -5,17 +5,6 @@ import { cn } from "@/lib/utils"
 import { formatAmount, parseGhsInput, type Minor } from "@/lib/money"
 import { Label } from "@/components/ui/label"
 
-/**
- * MONEY INPUT (doc 04 §4.6): a fixed "GHS" prefix, the decimal keypad on
- * phones (inputMode="decimal"), and tidy formatting when you leave the field
- * ("450" → "450.00").
- *
- * It reports the value as integer PESEWAS through onValueChange, so nothing
- * downstream ever touches a decimal number. For plain HTML forms, a hidden
- * input `${name}_minor` carries the pesewas too.
- *
- * Client Component: it reacts to typing.
- */
 export function MoneyInput({
   label,
   name,
@@ -29,9 +18,7 @@ export function MoneyInput({
   label: string
   name: string
   defaultMinor?: Minor
-  /** helper text under the field, e.g. "Buyer pays GHS 456.75" */
   description?: React.ReactNode
-  /** error text under the field; also marks the field invalid */
   error?: string
   onValueChange?: (minor: Minor | null) => void
   className?: string

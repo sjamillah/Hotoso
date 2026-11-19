@@ -5,11 +5,6 @@ import type { PublicDeal } from "@/lib/types"
 import { DealImage } from "./deal-image"
 import { CategoryTag } from "./category-tag"
 
-/**
- * A row of products, image first. Swipe on phones; a tidy grid on desktop.
- *   sold=false  available to buy: links to the deal page, shows the price
- *   sold=true   proof the seller delivers: a "Sold" mark, no link, no buyer
- */
 export function ProductStrip({ deals, sold = false, className }: { deals: PublicDeal[]; sold?: boolean; className?: string }) {
   return (
     <ul

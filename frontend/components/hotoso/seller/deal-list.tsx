@@ -7,13 +7,6 @@ import { CategoryTag } from "../category-tag"
 import { StatusChip } from "../status-chip"
 import { DealTabs, type DealTabGroup } from "./deal-tabs"
 
-/**
- * The seller's deals, grouped into tabs (doc 04 §5.4):
- *   Ship now · Awaiting payment · In progress · Done · Problems
- * "Ship now" comes first because it's the only tab where the seller owes
- * someone something.
- */
-
 const ALL_STATUSES: DealStatus[] = ["funded", "disputed", "payout_failed", "awaiting_payment", "shipped", "releasing", "refunding", "released", "refunded", "cancelled"]
 
 const GROUPS: { key: string; label: string; statuses: DealStatus[]; empty: string }[] = [
@@ -25,11 +18,6 @@ const GROUPS: { key: string; label: string; statuses: DealStatus[]; empty: strin
   { key: "done", label: "Done", statuses: ["released", "refunded", "cancelled"], empty: "No finished deals yet." },
 ]
 
-/**
- * layout="table": on desktop, a scannable table (Item · Buyer · Status ·
- * Next step · Amount): a seller with 30 orders a month compares DOWN a
- * column. Phones (and the narrow list beside a deal room) keep compact rows.
- */
 export function SellerDealList({
   deals,
   selectedSlug,
@@ -41,7 +29,6 @@ export function SellerDealList({
 }) {
   const table = layout === "table"
   const groups: DealTabGroup[] = GROUPS.map((g) => {
-    // "All" lists the most actionable first, in the order of ALL_STATUSES
     const items = deals
       .filter((d) => g.statuses.includes(d.status))
       .sort((a, b) => g.statuses.indexOf(a.status) - g.statuses.indexOf(b.status))
@@ -75,12 +62,10 @@ export function SellerDealList({
       ),
     }
   })
-  // the table opens on "All"; the narrow list beside a deal room opens on the first tab with deals
   const firstWithItems = groups.find((g) => g.key !== "all" && g.count > 0)?.key ?? "all"
   return <DealTabs groups={groups} defaultKey={table ? "all" : firstWithItems} />
 }
 
-/** The one thing that happens next, in plain words. */
 function nextStep(deal: Deal): string {
   switch (deal.status) {
     case "awaiting_payment": return "Waiting for payment"
@@ -110,7 +95,6 @@ function DealRow({ deal, selected, table }: { deal: Deal; selected: boolean; tab
       aria-current={selected ? "page" : undefined}
       className={cn("-mx-2 block rounded-sm px-2 py-3 transition-colors duration-150 hover:bg-card", selected && "bg-card", table && "lg:mx-0")}
     >
-      {/* desktop table row */}
       {table && (
         <div className="hidden grid-cols-[minmax(0,2.4fr)_minmax(0,1fr)_minmax(0,1.1fr)_minmax(0,1.3fr)_7rem] items-center gap-4 lg:grid">
           <div className="flex min-w-0 items-center gap-3">
@@ -126,7 +110,6 @@ function DealRow({ deal, selected, table }: { deal: Deal; selected: boolean; tab
           <span className="text-right font-mono text-base text-ink tabular-nums">{formatAmount(deal.itemMinor)}</span>
         </div>
       )}
-      {/* compact row (phones, and the narrow list beside a deal room) */}
       <div className={cn("grid grid-cols-[48px_minmax(0,1fr)_auto] items-center gap-3", table && "lg:hidden")}>
       <DealThumb photo={deal.photos[0]} />
       <div className="min-w-0">

@@ -1,7 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton"
 import { PublicHeader } from "@/components/hotoso/site-header"
 
-/** The first split second: same shape as the "confirming" view. */
 export default function Loading() {
   return (
     <div className="min-h-dvh bg-paper" aria-busy="true" aria-label="Checking your payment">

@@ -8,7 +8,6 @@ import { AppFooter } from "@/components/hotoso/app-footer"
 
 export const metadata: Metadata = { title: "Something's wrong", robots: { index: false } }
 
-/** /room/[slug]/problem?t=TOKEN: the buyer's "Something's wrong" flow. */
 export default async function ProblemPage({ params, searchParams }: PageProps<"/room/[slug]/problem">) {
   const { slug } = await params
   const query = await searchParams

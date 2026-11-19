@@ -1,10 +1,5 @@
 import type { MetadataRoute } from "next"
 
-/**
- * The web app manifest: what Android uses when someone taps "Add to Home
- * screen". Colours are raw hex because a manifest can't read CSS tokens:
- * --ink #282C20, --paper #E8E5D8.
- */
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Hotoso: pay sellers you've never met",

@@ -29,15 +29,6 @@ import {
 } from "@/components/ui/dialog"
 import { PhoneInput } from "../phone-input"
 
-/**
- * The interactive pieces of the deal room. Each one is a sheet that slides up
- * from the bottom (closer to the thumb than a centred popup).
- *
- * MOCK BEHAVIOUR: confirming an action shows a toast and moves the demo to
- * the next status via `nextHref`. In M5/M6 these call the real API instead,
- * e.g. POST /api/room/{slug}/confirm/ for "I got it".
- */
-
 function useMockAction(nextHref: string, message: string) {
   const router = useRouter()
   return () => {
@@ -46,9 +37,6 @@ function useMockAction(nextHref: string, message: string) {
   }
 }
 
-/* ------------------------------------------------------------------ buyer */
-
-/** "I got it, release payment": the ONE action that can't be undone (risk #2). */
 export function ReleaseSheet({ amount, sellerFirstName, nextHref }: { amount: string; sellerFirstName: string; nextHref: string }) {
   const release = useMockAction(nextHref, `Releasing ${amount} to ${sellerFirstName}`)
   return (
@@ -77,9 +65,6 @@ export function ReleaseSheet({ amount, sellerFirstName, nextHref }: { amount: st
   )
 }
 
-/* ------------------------------------------------------------------ both */
-
-/** Add a note and photos to an open dispute (buyer "Add a photo", seller "Add your side"). */
 export function EvidenceSheet({ triggerLabel, title, description, nextHref }: { triggerLabel: string; title: string; description: string; nextHref: string }) {
   const send = useMockAction(nextHref, "Added. We'll look at it with the rest.")
   const [files, setFiles] = React.useState<string[]>([])
@@ -116,7 +101,6 @@ export function EvidenceSheet({ triggerLabel, title, description, nextHref }: { 
   )
 }
 
-/** A file input styled as a quiet button, with the chosen file names listed. */
 export function PhotoPicker({ id, files, onChange, label = "Photos (optional, but they help)" }: { id: string; files: string[]; onChange: (names: string[]) => void; label?: string }) {
   return (
     <div className="flex flex-col gap-2">
@@ -140,9 +124,6 @@ export function PhotoPicker({ id, files, onChange, label = "Photos (optional, bu
   )
 }
 
-/* ------------------------------------------------------------------ seller */
-
-/** "Mark as shipped": optional rider note and proof photo. Starts the category's inspection clock (48h or 72h). */
 export function ShipSheet({ buyerFirstName, hours, nextHref }: { buyerFirstName: string; hours: number; nextHref: string }) {
   const ship = useMockAction(nextHref, `Marked as shipped. We told ${buyerFirstName}.`)
   const [files, setFiles] = React.useState<string[]>([])
@@ -175,7 +156,6 @@ export function ShipSheet({ buyerFirstName, hours, nextHref }: { buyerFirstName:
   )
 }
 
-/** payout_failed: let the seller check and fix their MoMo number. */
 export function PayoutNumberSheet({ current }: { current: string }) {
   return (
     <Sheet>
@@ -208,7 +188,6 @@ export function PayoutNumberSheet({ current }: { current: string }) {
   )
 }
 
-/** Share a deal link: WhatsApp (wa.me with a pre-filled message), copy, QR. */
 export function ShareSheet({
   url,
   title,
@@ -221,9 +200,7 @@ export function ShareSheet({
   url: string
   title: string
   amount: string
-  /** where "Done" goes after sharing (the new-deal flow ends here) */
   doneHref?: string
-  /** pass null for no trigger button (then control it with open/onOpenChange) */
   trigger?: React.ReactNode
   open?: boolean
   onOpenChange?: (open: boolean) => void
@@ -285,10 +262,6 @@ export function ShareSheet({
   )
 }
 
-/**
- * A QR-code PLACEHOLDER pattern (not scannable). A real QR needs a small
- * library (e.g. `qrcode`); we'll add it when real links exist in M2.
- */
 function MockQr() {
   const cells = Array.from({ length: 21 * 21 }, (_, i) => {
     const x = i % 21, y = Math.floor(i / 21)
@@ -304,7 +277,6 @@ function MockQr() {
   )
 }
 
-/** Seller cancels an unpaid deal. A dialog, because it's a deliberate, rare action. */
 export function CancelDealDialog({ nextHref }: { nextHref: string }) {
   const cancel = useMockAction(nextHref, "Deal cancelled. No money moved.")
   return (

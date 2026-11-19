@@ -12,10 +12,6 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 
-/**
- * "How it works" bottom sheet. Only the open/close behaviour is client-side.
- * The content arrives as `children`, already rendered on the server.
- */
 export function HowItWorksSheet({ children }: { children: React.ReactNode }) {
   return (
     <Sheet>

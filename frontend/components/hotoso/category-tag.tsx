@@ -18,7 +18,6 @@ import {
 import { cn } from "@/lib/utils"
 import { CATEGORIES, type CategoryCode } from "@/lib/categories"
 
-/** One icon per category (doc 08 §1). */
 export const CATEGORY_ICONS: Record<CategoryCode, LucideIcon> = {
   fashion: Shirt,
   shoes: Footprints,
@@ -36,7 +35,6 @@ export const CATEGORY_ICONS: Record<CategoryCode, LucideIcon> = {
   bulk_goods: Wheat,
 }
 
-/** A quiet tag: icon + short category name. */
 export function CategoryTag({ code, className }: { code: CategoryCode; className?: string }) {
   const Icon = CATEGORY_ICONS[code]
   return (

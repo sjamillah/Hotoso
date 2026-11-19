@@ -8,13 +8,6 @@ import { AppFooter } from "@/components/hotoso/app-footer"
 
 export const metadata: Metadata = { title: "Confirming your payment" }
 
-/**
- * /pay/return?reference=HTS-PAY-…   (Paystack sends the buyer back here)
- *
- * Mock-only switches: &deal=SLUG picks which deal, &demo=success|failed|slow
- * picks how the pretend Paystack answers. In M3 the backend's status
- * endpoint tells us the deal and the outcome.
- */
 export default async function PayReturnPage({ searchParams }: PageProps<"/pay/return">) {
   const query = await searchParams
   const reference = typeof query.reference === "string" ? query.reference : null

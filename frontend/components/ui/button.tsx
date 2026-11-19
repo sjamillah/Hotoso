@@ -3,19 +3,6 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 import { Slot } from "radix-ui"
 
-/**
- * Hotoso buttons (doc 04 §4.6).
- *
- * `cva` = "class variance authority": a small helper that picks a set of
- * classes from a variant name, e.g. variant="butter" → butter fill classes.
- *
- * Rules baked in here:
- * - Every size is at least 44px tall (thumb-sized hit target).
- * - `default` (ink) is THE primary action. One per screen.
- * - `butter` is for dark (ink) surfaces only: butter on paper is invisible.
- * - `outline` is the tailored secondary: thin ink border, 4px corners, caps label.
- * - `quiet-danger` is text-only clay, e.g. "Something's wrong with my order".
- */
 const buttonVariants = cva(
   "group/button inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap select-none font-sans transition-[background-color,color,border-color,scale] duration-150 ease-calm active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-5",
   {
@@ -46,7 +33,6 @@ const buttonVariants = cva(
       },
     },
     compoundVariants: [
-      // caps labels look heavier than sentence case, so pad them a bit less
       { variant: "outline", size: "default", className: "px-4" },
     ],
     defaultVariants: {

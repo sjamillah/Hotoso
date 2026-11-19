@@ -1,13 +1,9 @@
-# Project-wide ignores. frontend/.gitignore adds the Next.js-specific ones.
-
-# ---- secrets: NEVER committed (CLAUDE.md rule 6) ----
 .env
 .env.*
 !.env.example
 *.pem
 *.key
 
-# ---- Python / Django (backend, from M0) ----
 __pycache__/
 *.py[cod]
 .venv/
@@ -19,10 +15,8 @@ backend/staticfiles/
 backend/media/
 *.sqlite3
 
-# ---- Node (if anything is installed outside frontend/) ----
 node_modules/
 
-# ---- editors and operating systems ----
 .vscode/*
 !.vscode/extensions.json
 .idea/
@@ -30,5 +24,4 @@ node_modules/
 Thumbs.db
 desktop.ini
 
-# ---- Claude Code: personal settings stay on this laptop ----
 .claude/settings.local.json

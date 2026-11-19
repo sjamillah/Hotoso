@@ -1,17 +1,8 @@
-/**
- * Mock data: realistic Ghanaian examples until the Django API exists (M2+).
- *
- * The story: Ama Owusu (@ama.kicks) resells sneakers on Instagram from Accra.
- * Ama's buyers are around Accra and Kumasi. Amounts are integer pesewas.
- * "Now" in this mock world is Wed 18 Nov 2026, 2:30 PM.
- */
 import type { Deal, DealEvent, DealPhoto, DealStatus, SellerProfile } from "./types"
 import { photos as P } from "./photos"
 import type { SellerSummary as TrustSeller } from "@/components/hotoso/trust-block"
 import type { ReceiptLine } from "@/components/hotoso/receipt-card"
 import { previewFeeMinor } from "./fee"
-
-/* ---------------------------------------------------------------- people */
 
 export const ama: SellerProfile = {
   name: "Ama Owusu",
@@ -43,17 +34,8 @@ const buyers = {
   kwesi: { name: "Kwesi Addo", firstName: "Kwesi", email: "kwesi.addo@example.com", phone: "055 908 4421" },
 }
 
-/** Kept for the styleguide */
 export const kwame = { ...buyers.kwame, city: "Kumasi" }
 
-/* ---------------------------------------------------------------- helpers */
-
-/** Photos for a deal: real Unsplash images (see assets/photos/CREDITS.md). */
-/**
- * Photos for a deal. Real products have several photos, so each deal gets its
- * real photo(s) PLUS two close-up crops of the first one (centre detail and
- * lower detail): honest views of the same item, never a different item.
- */
 const shots = (title: string, ...srcs: DealPhoto["src"][]): DealPhoto[] => {
   const real = srcs.map((src, i) => ({ id: `p${i}`, src, alt: i === 0 ? title : `${title}, photo ${i + 1}` }))
   const crops: DealPhoto[] = [
@@ -74,8 +56,6 @@ function ev(type: DealEvent["type"], text: string, relative: string, exact: stri
   eventId += 1
   return { id: `e${eventId}`, type, text, relative, exact, iso: "2026-11-18T14:30:00Z" }
 }
-
-/* ---------------------------------------------------------------- deals */
 
 const samba: Deal = {
   slug: "SMB40OGA",
@@ -269,9 +249,6 @@ const converse: Deal = {
   ],
 }
 
-
-/* ---------------------------------------------------------------- other sellers, other categories (doc 08) */
-
 const seller = (name: string, handle: string, dealsCompleted: number, memberSince: string, bio: string, location: string, verified = false): SellerProfile => ({
   name, firstName: name.split(" ")[0], handle, dealsCompleted, problems: 0, memberSince, payoutMasked: "MTN ••• 0000", verified, bio, location,
 })
@@ -290,8 +267,6 @@ const awaiting = (d: Omit<Deal, "status" | "buyer" | "events" | "itemMinor" | "f
 }
 
 const sweater = awaiting({ slug: "SWTLIL01", title: "Lilac chunky knit sweater, size M", description: "Hand-knitted, thick rib. Worn twice, washed and folded.", photos: shots("Lilac chunky knit sweater", P.sweaterLilac), category: "fashion", seller: efuaThrift, shipWithinDays: 2, cedis: 280 })
-// 12 views, like a careful phone seller posts (front, corners, camera, ports…):
-// the real photo plus close-up crops of it. Proves the gallery copes with many photos.
 const iphoneViews: DealPhoto[] = [
   ["50% 50%", 1], ["25% 25%", 2.2], ["30% 35%", 1.6], ["70% 30%", 2], ["50% 80%", 2], ["80% 70%", 1.8],
   ["20% 70%", 2.2], ["60% 50%", 1.4], ["40% 60%", 2.4], ["75% 50%", 2], ["35% 20%", 2.3], ["55% 65%", 1.9],
@@ -308,20 +283,12 @@ const jerseys = awaiting({ slug: "JRSY2526", title: "Club jerseys, 2025/26 seaso
 const armchair = awaiting({ slug: "CHRTEAK1", title: "Wooden lounge armchair", description: "Solid wood frame, cream cushions. Delivery within Accra included.", photos: shots("Wooden lounge armchair", P.armchairWood), category: "home", seller: teakCo, shipWithinDays: 3, cedis: 2400 })
 const basket = awaiting({ slug: "BSKTWV01", title: "Handwoven market basket, made to order", description: "Woven by hand after you order. Choose your colours in the chat.", photos: shots("Handwoven basket", P.basketsWeaving), category: "crafts", seller: bolgaWeaves, shipWithinDays: 10, cedis: 150 })
 
-/** Public example deals in other categories (the deal page "rotates between categories", doc 08 §4) */
 export const CATEGORY_EXAMPLES: Deal[] = [sweater, iphone, perfume, bag, jerseys, armchair, basket]
 
 export const DEALS: Deal[] = [nb550, jordan4, samba, af1, airmax, suede, dunk, salomon, converse]
 
-/** Every deal any page can open (Ama's dashboard only shows DEALS). */
 export const ALL_DEALS: Deal[] = [...DEALS, ...CATEGORY_EXAMPLES]
 
-/* ---------------------------------------------------------------- demo helpers */
-
-/**
- * Show any deal in any status (for reviewing every action card).
- * Fills in plausible dates so the screen never shows "undefined".
- */
 export function withStatus(deal: Deal, status: DealStatus): Deal {
   if (status === deal.status) return deal
   const buyer = deal.buyer ?? buyers.kwame
@@ -347,8 +314,6 @@ export function receiptLines(deal: Pick<Deal, "title" | "itemMinor" | "feeMinor"
     { label: "Hotoso protection (1.5%)", amountMinor: deal.feeMinor },
   ]
 }
-
-/* ---------------------------------------------------------------- styleguide */
 
 export const af1Deal = {
   slug: af1.slug,

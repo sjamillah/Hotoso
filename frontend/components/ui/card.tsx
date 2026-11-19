@@ -1,10 +1,6 @@
 import * as React from "react"
 import { cn } from "@/lib/utils"
 
-/**
- * Flat card: 1px rule border + the faintest 1px shadow. No floating
- * drop-shadow; Hotoso looks printed, not hovering (doc 04 §3.3).
- */
 function Card({
   className,
   size = "default",

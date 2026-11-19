@@ -2,30 +2,19 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-/* =============================================================================
-   HOTOSO THEME
-   Source of truth: docs/04-design-system.md §3.
-
-   Layer 1 (:root, "brand tokens"): the ONLY place raw hex values live.
-   Layer 2 (:root, "shadcn role tokens"): point at layer 1, so shadcn's
-            components (bg-primary, text-muted-foreground…) use our palette.
-   Layer 3 (@theme): turns tokens into Tailwind classes (bg-paper, text-ink…).
-   ========================================================================== */
-
 :root {
-  /* ---- Layer 1: brand tokens (doc 04 §3.1) ---- */
-  --paper: #e8e5d8; /* Alabaster: app background */
-  --card: #f3f1e8; /* lighter Alabaster: cards, sheets, inputs */
-  --ink: #282c20; /* Black Olive: text, primary buttons, focus ring */
-  --ink-2: #4f5345; /* secondary text (6.3:1 on paper) */
-  --ink-3: #7b7d6f; /* NON-ESSENTIAL text only (3.3:1) */
-  --rule: #d2cebe; /* borders, dividers */
-  --muted: #ddd9ca; /* quiet surfaces, skeletons, sand tiles */
+  --paper: #e8e5d8;
+  --card: #f3f1e8;
+  --ink: #282c20;
+  --ink-2: #4f5345;
+  --ink-3: #7b7d6f;
+  --rule: #d2cebe;
+  --muted: #ddd9ca;
 
-  --butter: #e8ca78; /* Butterlight: the "money is safe" colour. Never text on paper. */
+  --butter: #e8ca78;
   --butter-soft: #f4e6bc;
   --safe: #465a1c;
-  --safe-soft: #f4e6bc; /* same as butter-soft: in Hotoso, safe IS butter */
+  --safe-soft: #f4e6bc;
   --wait: #845000;
   --wait-soft: #f0dcc6;
   --clay: #9e3727;
@@ -33,7 +22,6 @@
   --sky: #2b5269;
   --sky-soft: #d8e1e5;
 
-  /* ---- Layer 2: shadcn role tokens → brand tokens ---- */
   --background: var(--paper);
   --foreground: var(--ink);
   --card-foreground: var(--ink);
@@ -50,20 +38,15 @@
   --border: var(--rule);
   --input: var(--rule);
   --ring: var(--ink);
-  --radius: 0.875rem; /* 14px: cards */
+  --radius: 0.875rem;
 }
 
-/* ---- Layer 3: Tailwind theme ----
-   `--color-*: initial` DELETES Tailwind's default palette (blue-500, zinc-200…).
-   After this, only our token colours exist as classes, so a raw/off-brand colour
-   simply won't compile into anything. */
 @theme {
   --color-*: initial;
   --shadow-*: initial;
 }
 
 @theme inline {
-  /* Colours (bg-paper, text-ink, border-rule, bg-butter-soft…) */
   --color-paper: var(--paper);
   --color-card: var(--card);
   --color-ink: var(--ink);
@@ -82,7 +65,6 @@
   --color-sky: var(--sky);
   --color-sky-soft: var(--sky-soft);
 
-  /* shadcn role colours (used inside components/ui) */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card-foreground: var(--card-foreground);
@@ -100,13 +82,11 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  /* Fonts (variables come from next/font in app/layout.tsx) */
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
   --font-display: var(--font-fraunces), Georgia, serif;
   --font-heading: var(--font-geist-sans), ui-sans-serif, sans-serif;
 
-  /* Type scale (doc 04 §3.2). xs/sm/base/lg match Tailwind; xl–3xl are ours. */
   --text-xl: 1.375rem;
   --text-xl--line-height: 1.3;
   --text-2xl: 1.75rem;
@@ -116,23 +96,17 @@
   --text-amount: 3rem;
   --text-amount--line-height: 1.1;
 
-  /* Radius (doc 04 §3.3) */
-  --radius-xs: 4px; /* secondary / outline buttons */
-  --radius-sm: 8px; /* inputs, badges, primary buttons */
-  --radius-md: 14px; /* cards */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 14px;
   --radius-lg: var(--radius);
   --radius-xl: 20px;
 
-  /* Elevation: almost flat */
   --shadow-card: 0 1px 0 rgb(23 20 15 / 0.04);
   --shadow-sheet: 0 12px 40px -12px rgb(23 20 15 / 0.25);
 
-  /* Motion */
   --ease-calm: cubic-bezier(0.2, 0.8, 0.2, 1);
 
-  /* The HoldStrip coin: the ONLY decorative motion in Hotoso (doc 04 §3.3).
-     Each one moves the coin's `left` between the three places
-     (0% = buyer, 50% = Hotoso, 100% = seller), or gently breathes. */
   --animate-coin-release: coin-release 2.8s var(--ease-calm) infinite;
   --animate-coin-refund: coin-refund 2.8s var(--ease-calm) infinite;
   --animate-coin-arrive: coin-arrive 1.2s var(--ease-calm) 300ms both;
@@ -156,12 +130,6 @@
   }
 }
 
-/* =============================================================================
-   Editorial text styles (doc 04 §3.2, "Editorial text styles")
-   `@utility` makes each one a Tailwind class, e.g. <p className="label-caps">.
-   ========================================================================== */
-
-/* Ceremonial headline. Only at ≥ 32px (the clamp minimum is 40px). */
 @utility display-caps {
   font-family: var(--font-display);
   font-weight: 300;
@@ -172,8 +140,6 @@
   font-size: clamp(2.5rem, 9vw, 4.5rem);
 }
 
-/* Page titles in the app screens: the landing's editorial voice, kept calm.
-   Pair with a size (text-3xl…) and put ONE word in <em className="italic">. */
 @utility title-serif {
   font-family: var(--font-display);
   font-weight: 300;
@@ -182,7 +148,6 @@
   line-height: 1.08;
 }
 
-/* Section headings inside screens: PRICE, ACTIVITY */
 @utility heading-caps {
   font-family: var(--font-sans);
   font-weight: 600;
@@ -192,7 +157,6 @@
   line-height: 1.25rem;
 }
 
-/* Eyebrows, tab labels, short tags. 1–4 words, never sentences. */
 @utility label-caps {
   font-family: var(--font-sans);
   font-weight: 500;
@@ -202,7 +166,6 @@
   line-height: 1rem;
 }
 
-/* References, timestamps, counters */
 @utility label-mono {
   font-family: var(--font-mono);
   font-weight: 400;
@@ -213,8 +176,6 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Big money amounts: Fraunces 500, soft, tight. Pair with a size class
-   (text-amount, text-3xl…). */
 @utility money {
   font-family: var(--font-display);
   font-weight: 500;
@@ -223,12 +184,9 @@
   font-variant-numeric: lining-nums tabular-nums;
 }
 
-/* Perforated top edge for receipts: a row of half-circle "bites" cut out of
-   the top of the element with a CSS mask (doc 04 §4.3). The mask only uses
-   transparency, so it doesn't introduce any colour. */
 @utility perforated-top {
-  --perf: 7px; /* radius of each bite */
-  --gap: 18px; /* distance between bites */
+  --perf: 7px;
+  --gap: 18px;
   -webkit-mask:
     radial-gradient(circle var(--perf) at 50% 0, transparent 98%, black)
       top / var(--gap) 51% repeat-x,
@@ -239,15 +197,7 @@
     linear-gradient(black, black) bottom / 100% 50% no-repeat;
 }
 
-/* =============================================================================
-   MOTION SYSTEM (doc 04 §3.3, updated 18 Nov 2026)
-   Landing: purposeful storytelling motion. App screens: feedback only.
-   Everything here is switched off by "reduce motion" (bottom of this file).
-   ========================================================================== */
-
 @layer components {
-  /* Scroll reveal: elements rise in when they enter the screen (<Reveal>).
-     Hidden ONLY when JavaScript runs, so the page still works without it. */
   @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
     .reveal {
       transition:
@@ -260,7 +210,6 @@
       translate: 0 28px;
     }
 
-    /* A receipt that "prints" from the top down (<Reveal className="print">) */
     .print {
       transition: clip-path 1600ms cubic-bezier(0.6, 0, 0.2, 1);
       transition-delay: var(--reveal-delay, 0ms);
@@ -273,7 +222,6 @@
     }
   }
 
-  /* Hero: each headline line rises out of its own mask on page load */
   .rise-mask {
     display: block;
     overflow: hidden;
@@ -285,12 +233,10 @@
     animation-delay: var(--rise-delay, 0ms);
   }
 
-  /* Hero photo: settles slowly into place, like a camera finding focus */
   .settle {
     animation: settle 2600ms var(--ease-calm) both;
   }
 
-  /* Hang tags on the collage: swing a little when you hover the photo */
   .hang-tag {
     transform-origin: 50% 0;
     rotate: -6deg;
@@ -301,7 +247,6 @@
     rotate: 3deg;
   }
 
-  /* FAQ answers glide open (progressive: browsers without support just open) */
   .faq::details-content {
     block-size: 0;
     overflow: hidden;
@@ -315,7 +260,7 @@
 }
 
 :root {
-  interpolate-size: allow-keywords; /* lets `height: auto` animate */
+  interpolate-size: allow-keywords;
 }
 
 @keyframes rise {
@@ -327,9 +272,6 @@
   to { scale: 1; }
 }
 
-/* =============================================================================
-   Base styles
-   ========================================================================== */
 @layer base {
   * {
     @apply border-rule;
@@ -344,7 +286,6 @@
   ::selection {
     @apply bg-butter-soft text-ink;
   }
-  /* One focus style everywhere: 2px ink ring with a 2px gap (doc 04 §4.6) */
   :focus-visible {
     @apply outline-2 outline-offset-2 outline-ink;
   }
@@ -354,8 +295,6 @@
   }
 }
 
-/* Respect "reduce motion": stop all animation and transitions. The HoldStrip
-   coin then simply sits where the money is. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

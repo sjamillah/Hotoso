@@ -17,18 +17,6 @@ import {
 import { formatGHS, type Minor } from "@/lib/money"
 import { PhoneInput } from "./phone-input"
 
-/**
- * The pay step of the public deal page.
- *
- * 1. The buyer taps "Pay GHS … into Hotoso" (sticky on phones, inline on desktop).
- * 2. A sheet asks for name, phone and email. Paystack requires an email, and
- *    we send the private deal-room link there.
- * 3. "Continue to Paystack":
- *      M3 (real): POST /api/deals/{slug}/pay/ → backend creates a Payment and
- *                 asks Paystack for a checkout page → we REDIRECT the browser
- *                 there. The buyer pays on Paystack's page, never ours.
- *      Now (mock): we skip Paystack and jump straight to /pay/return.
- */
 export function PaySheet({
   slug,
   totalMinor,
@@ -58,13 +46,11 @@ export function PaySheet({
     if (Object.keys(next).length > 0) return
 
     setSubmitting(true)
-    // MOCK: pretend the backend answered with a reference, skip Paystack.
     router.push(`/pay/return?reference=HTS-PAY-01JDSMB40X&deal=${slug}&demo=success`)
   }
 
   return (
     <>
-      {/* Desktop: inline button */}
       <div className="hidden flex-col gap-2 lg:flex">
         <Button size="lg" width="full" onClick={() => setOpen(true)}>
           {payLabel}
@@ -74,7 +60,6 @@ export function PaySheet({
         </p>
       </div>
 
-      {/* Phone: sticky bar, always visible, so the price is never out of sight */}
       <div className="fixed inset-x-0 bottom-0 z-30 border-t border-rule bg-paper px-5 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] lg:hidden">
         <Button size="lg" width="full" onClick={() => setOpen(true)}>
           {payLabel}

@@ -16,21 +16,12 @@ import { cn } from "@/lib/utils"
 import type { DealEventType } from "@/lib/types"
 import { RelativeTime } from "./relative-time"
 
-/**
- * TIMELINE (doc 04 §4.5): what happened to this deal, as plain sentences.
- * Newest at the BOTTOM, like a chat, because people read it top-down as a story.
- * It's built from DealEvent rows, the same audit trail the backend keeps.
- */
-
 export type TimelineItem = {
   id: string
   type: DealEventType
   text: string
-  /** "2h ago" */
   relative: string
-  /** "18 Nov 2026, 14:02" (shown on hover/focus) */
   exact: string
-  /** ISO timestamp for the <time> element */
   iso: string
 }
 
@@ -59,7 +50,6 @@ export function Timeline({ items, className }: { items: TimelineItem[]; classNam
         const last = i === items.length - 1
         return (
           <li key={item.id} className="relative flex gap-3 pb-5 last:pb-0">
-            {/* the thin vertical thread joining the events */}
             {!last && <span aria-hidden="true" className="absolute top-9 bottom-1 left-4 w-px bg-rule" />}
             <span
               aria-hidden="true"

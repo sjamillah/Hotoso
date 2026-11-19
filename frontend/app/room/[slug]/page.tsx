@@ -8,12 +8,6 @@ import { AppFooter } from "@/components/hotoso/app-footer"
 
 export const metadata: Metadata = { title: "Your deal room", robots: { index: false } }
 
-/**
- * BUYER DEAL ROOM  /room/[slug]?t=TOKEN   (doc 04 §5.3)
- * The private link emailed to the buyer after paying. `t` proves it's them.
- *
- * Mock-only: &status=shipped (etc.) previews the room in any status.
- */
 export default async function BuyerRoomPage({ params, searchParams }: PageProps<"/room/[slug]">) {
   const { slug } = await params
   const query = await searchParams
@@ -43,7 +37,6 @@ export default async function BuyerRoomPage({ params, searchParams }: PageProps<
   )
 }
 
-/** The link is missing its private token: show nothing about the deal. */
 function CheckYourLink({ slug }: { slug: string }) {
   return (
     <div className="min-h-dvh bg-paper">

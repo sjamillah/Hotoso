@@ -1,12 +1,3 @@
-/**
- * CATEGORIES (docs/08-categories.md §1 and §3), as CONFIG, not code.
- *
- * One table drives everything: the New Deal picker, the extra fields each
- * category needs, the inspection window shown to buyers, and the blocked-
- * items warning. The backend keeps the SAME rules in deals/categories.py
- * (M2) and is the authority; this file is the friendly early warning.
- */
-
 export const CATEGORY_CODES = [
   "fashion",
   "shoes",
@@ -26,7 +17,6 @@ export const CATEGORY_CODES = [
 
 export type CategoryCode = (typeof CATEGORY_CODES)[number]
 
-/** An extra thing the seller must provide for this category. */
 export type Requirement =
   | { kind: "photo"; id: string; label: string; hint: string; whenOverMinor?: number }
   | { kind: "text"; id: string; label: string; hint: string; placeholder: string }
@@ -34,17 +24,13 @@ export type Requirement =
 export type CategoryRule = {
   code: CategoryCode
   label: string
-  short: string // for tight spaces: chips, table cells
+  short: string
   examples: string
   inspectionHours: 48 | 72
-  /** Wording for the inspection window ("test" for electronics) */
   windowWord: "inspect" | "test"
-  /** A rule the buyer should know before paying, if any */
   buyerNote?: string
   requirements: Requirement[]
-  /** Longest ship window the seller can choose, in days */
   maxShipDays: number
-  /** Higher ceiling for verified sellers (pesewas) */
   verifiedMaxMinor?: number
 }
 
@@ -116,7 +102,7 @@ export const CATEGORIES: Record<CategoryCode, CategoryRule> = {
     code: "crafts", label: "Arts, crafts & handmade", short: "Handmade",
     examples: "Bolga baskets, paintings, beadwork, carvings, leather goods",
     inspectionHours: 72, windowWord: "inspect", requirements: [],
-    maxShipDays: 14, // made-to-order
+    maxShipDays: 14,
   },
   preloved: {
     code: "preloved", label: "Pre-loved / second-hand", short: "Pre-loved",
@@ -154,13 +140,10 @@ export const CATEGORIES: Record<CategoryCode, CategoryRule> = {
   },
 }
 
-/** e.g. "72 hours to inspect" / "48 hours to test" */
 export function windowLabel(code: CategoryCode) {
   const c = CATEGORIES[code]
   return `${c.inspectionHours} hours to ${c.windowWord} it`
 }
-
-/* ------------------------------------------------------------------ blocked items (§3) */
 
 const BLOCKED: { words: string[]; reason: string }[] = [
   { words: ["cake", "cakes", "cooked", "jollof", "kenkey", "waakye", "cooked meal", "meals", "pastry", "pastries", "fresh fish", "fresh meat"], reason: "Perishable food can't be protected: spoilage disputes can't be judged fairly." },
@@ -175,12 +158,6 @@ const BLOCKED: { words: string[]; reason: string }[] = [
   { words: ["loan", "investment", "susu", "double your money"], reason: "Loans, investments and susu are financial services, not goods." },
 ]
 
-/**
- * Returns why an item can't be sold, or null. Matches whole words/phrases only.
- * Ambiguous words are written as PHRASES ("plot of land", not "land") because a
- * false block treats an honest seller like a criminal. Tested both ways in
- * tests/blocked-items.check.ts (run: npm run check:blocked).
- */
 export function blockedReason(text: string): string | null {
   const t = ` ${text.toLowerCase().replace(/[^a-z0-9 ]/g, " ")} `
   for (const group of BLOCKED) {

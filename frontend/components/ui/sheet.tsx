@@ -53,10 +53,6 @@ function SheetContent({
   showCloseButton = true,
   ...props
 }: React.ComponentProps<typeof SheetPrimitive.Content> & {
-  /**
-   * "responsive": a bottom sheet on phones (near the thumb), a side panel on
-   * desktop (the page stays visible beside it, nothing wasted).
-   */
   side?: "top" | "right" | "bottom" | "left" | "responsive"
   showCloseButton?: boolean
 }) {
@@ -107,7 +103,7 @@ function SheetFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="sheet-footer"
-      className={// mt-auto pins the actions to the bottom of a side panel, always in the same place
+      className={
       cn("mt-auto flex flex-col gap-2 px-5 pt-2 pb-5 data-[side=right]:border-t", className)}
       {...props}
     />

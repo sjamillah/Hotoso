@@ -4,11 +4,6 @@ import { Button } from "@/components/ui/button"
 import { PublicHeader } from "@/components/hotoso/site-header"
 import { AppFooter } from "@/components/hotoso/app-footer"
 
-/**
- * Any address that doesn't exist, including deal links that were mistyped.
- * The big empty strip with the coin at the start is the joke-that-reassures:
- * the money never left. Then two ways forward.
- */
 export default function NotFound() {
   return (
     <div className="flex min-h-dvh flex-col bg-paper">
@@ -24,7 +19,6 @@ export default function NotFound() {
           </p>
         </div>
 
-        {/* a strip with nowhere to go: the coin is still at the start */}
         <div aria-hidden="true" className="relative mx-4 h-12">
           <span className="absolute top-1/2 h-px w-full -translate-y-1/2 border-t border-dashed border-ink-3" />
           <span className="absolute top-1/2 left-0 flex size-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-ink bg-butter font-display text-xl font-semibold text-ink">

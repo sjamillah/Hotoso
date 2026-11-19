@@ -10,12 +10,6 @@ import { BackLink } from "@/components/hotoso/back-link"
 import Link from "next/link"
 import { ArrowLeft, Eye } from "lucide-react"
 
-/**
- * PUBLIC SHOP  /shop/[handle]   (the "seller public profile" stretch idea, doc 05)
- * What a buyer sees when they tap "Visit shop": the storefront, what's for
- * sale now, and what sold recently (proof the seller delivers). Never buyers.
- */
-
 export async function generateMetadata({ params }: PageProps<"/shop/[handle]">): Promise<Metadata> {
   const { handle } = await params
   const shop = await getSellerShop(handle)
@@ -27,15 +21,12 @@ export default async function ShopPage({ params, searchParams }: PageProps<"/sho
   const query = await searchParams
   const shop = await getSellerShop(handle, readDemo(query.demo))
   if (!shop) notFound()
-  // The seller opened their own shop from the dashboard ("See your shop").
-  // M2: decided by the logged-in session, not a URL flag.
   const preview = query.preview === "seller"
 
   const coverPhotos = [...shop.available, ...shop.sold].map((d) => d.photos[0])
 
   return (
     <div className="min-h-dvh bg-paper">
-      {/* the seller is looking at their OWN shop: say so, and offer the way back */}
       {preview && (
         <div className="bg-ink text-paper">
           <div className="mx-auto flex max-w-[1120px] flex-wrap items-center justify-between gap-x-4 gap-y-1 px-5 py-2 lg:px-8">
