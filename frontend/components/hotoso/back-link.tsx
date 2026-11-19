@@ -1,0 +1,61 @@
+"use client"
+
+import { useSyncExternalStore } from "react"
+import { useRouter } from "next/navigation"
+import { ArrowLeft } from "lucide-react"
+import { cn } from "@/lib/utils"
+import { TRAIL_EVENT, readTrail } from "./nav-tracker"
+
+/**
+ * A smart "Back" button.
+ *
+ * - Came here from another Hotoso page (on the trail kept by <NavTracker>)? It goes BACK there (the shop → the
+ *   dashboard, the shop → the deal), exactly like the browser's back button.
+ * - Came from outside (a WhatsApp link, a fresh tab)? It hides itself:
+ *   "back" would mean leaving Hotoso, and the browser already does that.
+ *   Pass `fallbackHref` to show it anyway and go there instead.
+ *
+ * `useSyncExternalStore` reads the trail safely: the server (which has no
+ * trail) renders nothing, and the browser fills it in.
+ */
+/** Is there a Hotoso page behind this one on the trail? */
+function canGoBackInHotoso() {
+  return readTrail().length >= 2
+}
+
+/** Re-check whenever <NavTracker> updates the trail. */
+function subscribe(onChange: () => void) {
+  window.addEventListener(TRAIL_EVENT, onChange)
+  return () => window.removeEventListener(TRAIL_EVENT, onChange)
+}
+
+export function BackLink({
+  fallbackHref,
+  label = "Back",
+  tone = "paper",
+  className,
+}: {
+  fallbackHref?: string
+  label?: string
+  tone?: "paper" | "ink"
+  className?: string
+}) {
+  const router = useRouter()
+  const internal = useSyncExternalStore(subscribe, canGoBackInHotoso, () => false)
+  if (!internal && !fallbackHref) return null
+
+  return (
+    <button
+      type="button"
+      onClick={() => (internal ? router.back() : router.push(fallbackHref!))}
+      className={cn(
+        "-ml-2 inline-flex h-11 items-center gap-1.5 rounded-sm px-2 text-base font-medium transition-colors duration-150 [&_svg]:size-5",
+        tone === "ink" ? "text-paper hover:bg-ink-2" : "text-ink hover:bg-muted",
+        className
+      )}
+    >
+      <ArrowLeft aria-hidden="true" />
+      <span className="max-sm:sr-only">{label}</span>
+    </button>
+  )
+}
