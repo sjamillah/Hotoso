@@ -7,7 +7,7 @@ Build **one milestone at a time**. At the end of each one, stop, run the demo, a
 ## M0 — Setup (½ day)
 - Create a Paystack account (choose Ghana) and copy the **test** secret and public keys.
 - Install Python 3.12+, Node 20+, Docker Desktop, and ngrok or cloudflared.
-- Monorepo skeleton: `backend/` (Django 5, DRF, django-environ, psycopg, pytest-django) and `frontend/` (Next.js, TypeScript, Tailwind, ESLint).
+- Monorepo skeleton: `backend/` (Django 6.1, DRF, django-environ, psycopg, pytest-django) and `frontend/` (Next.js, TypeScript, Tailwind, ESLint).
 - `docker-compose.yml` with Postgres 16 (and Redis 7 for later).
 - Next.js `rewrites` from `/api/:path*` to `http://localhost:8000/api/:path*`.
 - **Demo:** `localhost:3000` shows a page that fetches `/api/health/` from Django.

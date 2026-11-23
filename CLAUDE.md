@@ -12,7 +12,7 @@ This is a **learning project**. The developer is building their first payment in
 - `docs/05-build-plan.md`: milestones. Work on **one milestone at a time.**
 
 ## Stack
-- `backend/`: Django 5, Django REST Framework, PostgreSQL 16, django-environ, httpx, pytest-django. Celery + Redis from M7.
+- `backend/`: Django 6.1, Django REST Framework, PostgreSQL 16, django-environ, httpx, pytest-django. Celery + Redis from M7.
 - `frontend/`: Next.js (App Router, TypeScript, strict), Tailwind CSS, `next/font` (Fraunces, Geist, Geist Mono).
 - Next.js rewrites `/api/:path*` → Django. Auth is Django session cookies + CSRF. No JWT.
 - Paystack in **TEST MODE ONLY**. Currency GHS.

@@ -7,7 +7,7 @@ hotoso/
 ├── CLAUDE.md
 ├── docs/                       # these documents
 ├── docker-compose.yml          # postgres:16, redis:7
-├── backend/                    # Django 5 + DRF
+├── backend/                    # Django 6.1 + DRF
 │   ├── manage.py
 │   ├── config/                 # settings.py, urls.py, celery.py (M6)
 │   ├── accounts/               # User, SellerProfile, auth endpoints

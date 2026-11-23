@@ -12,8 +12,6 @@ A learning project for Paystack payments (test mode), built with Next.js + Djang
 | [03 Architecture](docs/03-architecture.md) | Data model, state machine, payment flows, API |
 | [04 Design system](docs/04-design-system.md) | Tokens, signature components, every screen |
 | [05 Build plan](docs/05-build-plan.md) | 8 milestones with demos and self-check questions |
-| [06 Frontend guide](docs/06-frontend-guide.md) | The frontend explained step by step: tokens, server vs client components, mock data, money |
-| [07 Code explained](docs/07-code-explained.md) | Every page, component and helper, element by element (the code itself has no comments: read this beside it) |
 | [08 Categories](docs/08-categories.md) | What sellers can sell, inspection windows per category, blocked items |
 | [UI direction](docs/design/ui-direction.md) | The visual direction the design system grew from |
 
