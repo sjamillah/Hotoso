@@ -23,7 +23,7 @@ RUN pip wheel --wheel-dir=/wheels -r requirements.txt
 FROM base AS runner
 
 ENV PATH="/opt/venv/bin:$PATH" \
-    DJANGO_SETTINGS_MODULE=config.settings
+    DJANGO_SETTINGS_MODULE=config.settings.prod
 
 # Create an isolated Python environment
 RUN python -m venv /opt/venv
