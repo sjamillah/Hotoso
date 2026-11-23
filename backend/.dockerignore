@@ -1,0 +1,34 @@
+# Git & Docker
+.git
+.gitignore
+.dockerignore
+Dockerfile*
+docker-compose*
+
+# Secrets & Local Config
+.env
+.env.*
+*.pem
+*.key
+
+# Dependencies & Caches (Node / Python)
+node_modules
+npm-debug.log*
+venv
+.venv
+__pycache__
+*.py[cod]
+.pytest_cache
+
+# Build Outputs & Logs
+dist
+build
+*.log
+.DS_Store
+
+# IDE & Docs
+.vscode
+.idea
+README.md
+docs
+tests

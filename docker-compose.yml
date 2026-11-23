@@ -21,3 +21,15 @@ services:
       - no-new-privileges:true
     mem_limit: 768m
     pids_limit: 200
+
+  backend:
+    build:
+      context: ./backend
+    image: hotoso-backend
+    ports:
+      - "127.0.0.1:8000:8000"
+    restart: unless-stopped
+
+    # no readonly because gunicorn needs to write
+    env_file:
+      - ./backend/.env
